@@ -41,15 +41,17 @@
             android:exported="false" />
         <activity
             android:name=".lib.petani.login_petani_activity.view.LoginPetaniActivity"
-            android:exported="false" />
-        <activity
-            android:name=".lib.main_activity.view.MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".lib.main_activity.view.MainActivity"
+            android:exported="false">
+
         </activity>
     </application>
 

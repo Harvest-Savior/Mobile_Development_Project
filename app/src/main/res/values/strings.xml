@@ -2,4 +2,13 @@
     <string name="app_name">Harvest_Savior_Mobile-Dev</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="masuk_ke_akun_kamu">Masuk ke Akun Kamu</string>
+    <string name="masukkan_email_dan_password_kamu_untuk_masuk_ke_aplikasi_harvest_savior">Masukkan email dan password kamu untuk masuk ke aplikasi Harvest Savior</string>
+    <string name="email">Email</string>
+    <string name="gmail_com">*****@gmail.com</string>
+    <string name="password">Password</string>
+    <string name="hint_pw">••••••••</string>
+    <string name="belum_memiliki_akun">Belum memiliki akun?</string>
+    <string name="masuk">Masuk</string>
+    <string name="tv_toPenjual">Klik disini untuk login sebagai penjual dan mulai berjualan diaplikasi Harvest Savior</string>
 </resources>
