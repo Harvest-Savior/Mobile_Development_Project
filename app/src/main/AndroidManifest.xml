@@ -13,6 +13,21 @@
         android:theme="@style/Theme.Harvest_Savior_MobileDev"
         tools:targetApi="31">
         <activity
+            android:name=".lib.onboard_activity.view.OnBoardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".lib.penjual.daftar_penjual_activity.view.DaftarPenjualActivity"
+            android:exported="false" />
+        <activity
+            android:name=".lib.penjual.edit_obat_activity.view.EditObatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".lib.penjual.home_penjual_activity.view.HomePenjualActivity"
+            android:exported="false" />
+        <activity
+            android:name=".lib.penjual.login_penjual_activity.view.LoginPenjualActivity"
+            android:exported="false" />
+        <activity
             android:name=".lib.petani.daftar_petani_activity.view.DaftarPetaniActivity"
             android:exported="false" />
         <activity
