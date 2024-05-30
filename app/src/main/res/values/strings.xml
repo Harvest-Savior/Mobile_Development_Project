@@ -23,6 +23,11 @@
     <string name="home">Home</string>
     <string name="deteksi">Deteksi</string>
     <string name="riwayat">Riwayat</string>
+    <string name="ambil_photo">Ambil Photo</string>
+    <string name="atau">Atau</string>
+    <string name="pilih_gambar">Pilih Gambar</string>
+    <string name="take_picture">ambil gambar</string>
+    <string name="swift_camera">swift camera</string>
 
 
 </resources>

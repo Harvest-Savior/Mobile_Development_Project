@@ -25,7 +25,6 @@ class DashboardPetaniActivity : AppCompatActivity() {
         val bottomNav = binding.bottomNavPetani
 
         viewPager.adapter = DashboardAdapter(this)
-
         bottomNav.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {

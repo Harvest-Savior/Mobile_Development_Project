@@ -2,6 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +21,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Harvest_Savior_MobileDev"
         tools:targetApi="31">
+        <activity
+            android:name=".lib.petani.camera_activity.view.CameraPetaniActivity"
+            android:exported="false" />
+        <activity
+            android:name=".lib.petani.hasil_deteksi_activity.view.HasilDeteksiActivity"
+            android:exported="false" />
         <activity
             android:name=".lib.onboard_activity.view.OnBoardActivity"
             android:exported="false" />
@@ -41,7 +56,7 @@
             android:exported="false" />
         <activity
             android:name=".lib.petani.login_petani_activity.view.LoginPetaniActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,9 +65,7 @@
         </activity>
         <activity
             android:name=".lib.main_activity.view.MainActivity"
-            android:exported="false">
-
-        </activity>
+            android:exported="false" />
     </application>
 
 </manifest>
