@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.example.harvest_savior_mobile_dev.R
 import com.example.harvest_savior_mobile_dev.databinding.ActivityLoginPetaniBinding
 import com.example.harvest_savior_mobile_dev.lib.petani.daftar_petani_activity.view.DaftarPetaniActivity
+import com.example.harvest_savior_mobile_dev.lib.petani.dashboard_petani_activity.view.DashboardPetaniActivity
 import com.example.harvest_savior_mobile_dev.lib.petani.login_petani_activity.viewmodel.LoginPetaniViewModel
 import com.example.harvest_savior_mobile_dev.util.AnimationUtil
 
@@ -24,6 +25,12 @@ class LoginPetaniActivity : AppCompatActivity() {
 
         binding.tvDaftar.setOnClickListener {
             val intent = Intent(this, DaftarPetaniActivity::class.java)
+            AnimationUtil.startActivityWithSlideAnimation(this, intent)
+        }
+
+        binding.btnLoginPetani.setOnClickListener {
+            val intent = Intent(this, DashboardPetaniActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             AnimationUtil.startActivityWithSlideAnimation(this, intent)
         }
     }

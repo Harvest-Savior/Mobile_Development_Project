@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/layout_dashboard"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/navigation_deteksi"
+        android:icon="@drawable/scan"
+        android:title="@string/deteksi" />
+    <item
+        android:id="@+id/navigation_riwayat"
+        android:icon="@drawable/gallery_vertical_end"
+        android:title="@string/riwayat" />
+</menu>
