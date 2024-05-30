@@ -9,4 +9,9 @@
     </style>
 
     <style name="Theme.Harvest_Savior_MobileDev" parent="Base.Theme.Harvest_Savior_MobileDev" />
+
+    <style name="PlaceholderStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/gray500</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>
