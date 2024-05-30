@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.example.harvest_savior_mobile_dev.R
 import com.example.harvest_savior_mobile_dev.databinding.ActivityDaftarPetaniBinding
 import com.example.harvest_savior_mobile_dev.lib.petani.daftar_petani_activity.viewmodel.DaftarPetaniViewModel
+import com.example.harvest_savior_mobile_dev.util.AnimationUtil
 
 class DaftarPetaniActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDaftarPetaniBinding
@@ -13,5 +14,10 @@ class DaftarPetaniActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDaftarPetaniBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        AnimationUtil.finishActivityWithSlideAnimation(this)
     }
 }
