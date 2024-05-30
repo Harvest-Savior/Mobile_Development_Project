@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingVertical="10dp"
+    android:paddingHorizontal="20dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_container_list_riwayat"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/stroke_button"
+
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+            <ImageView
+                android:id="@+id/iv_riwayat_deteksi"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/example_iv_riwayat"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_tanggal_riwayat"
+                android:layout_width="wrap_content"
+                android:text="@string/example_tanggal_riwayat"
+                android:fontFamily="@font/abelregular"
+                android:textSize="14sp"
+                android:textColor="@color/gray400"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                app:layout_constraintStart_toEndOf="@id/iv_riwayat_deteksi"
+                app:layout_constraintTop_toTopOf="@id/iv_riwayat_deteksi"
+                app:layout_constraintBottom_toTopOf="@id/tv_info_riwayat_deteksi"/>
+            <TextView
+                android:id="@+id/tv_info_riwayat_deteksi"
+                android:layout_width="wrap_content"
+                android:text="@string/example_info_riwayat_deteksi"
+                android:fontFamily="@font/abelregular"
+                android:textSize="18sp"
+                android:textColor="@color/gray700"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toEndOf="@id/iv_riwayat_deteksi"
+                app:layout_constraintTop_toBottomOf="@id/tv_tanggal_riwayat"/>
+
+            <ImageView
+                android:id="@+id/iv_riwayat_warning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icons8_warning_1"
+                android:layout_marginStart="15dp"
+                app:layout_constraintStart_toEndOf="@id/iv_riwayat_deteksi"
+                app:layout_constraintTop_toBottomOf="@id/tv_info_riwayat_deteksi"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_riwayat_warning"
+                android:layout_width="wrap_content"
+                android:text="@string/example_tv_riwayat_warning"
+                android:fontFamily="@font/abelregular"
+                android:textSize="14sp"
+                android:textColor="@color/orange500"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toEndOf="@id/iv_riwayat_warning"
+                app:layout_constraintTop_toBottomOf="@id/tv_info_riwayat_deteksi"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

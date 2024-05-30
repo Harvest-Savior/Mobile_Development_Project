@@ -15,9 +15,7 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import com.example.harvest_savior_mobile_dev.R
 import com.example.harvest_savior_mobile_dev.databinding.ActivityCameraPetaniBinding
-import com.example.harvest_savior_mobile_dev.lib.petani.dashboard_petani_activity.view.fragment.DeteksiFragment.Companion.EXTRA_CAMERAX_IMAGE
 import com.example.harvest_savior_mobile_dev.util.createCustomTempFile
 
 class CameraPetaniActivity : AppCompatActivity() {

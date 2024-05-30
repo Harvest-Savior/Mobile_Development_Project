@@ -28,6 +28,9 @@
     <string name="pilih_gambar">Pilih Gambar</string>
     <string name="take_picture">ambil gambar</string>
     <string name="swift_camera">swift camera</string>
+    <string name="example_tanggal_riwayat">Senin 30 February · 01:32</string>
+    <string name="example_info_riwayat_deteksi">Tomat terjangkit penyakit!</string>
+    <string name="example_tv_riwayat_warning">Tindakan diperlukan</string>
 
 
 </resources>
