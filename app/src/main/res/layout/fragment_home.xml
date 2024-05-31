@@ -6,7 +6,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".lib.petani.dashboard_petani_activity.view.fragment.HomeFragment">
 
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,18 +47,72 @@
                 app:layout_constraintTop_toTopOf="@id/tv_welcome_homePetani"
                 app:layout_constraintBottom_toBottomOf="@id/tv_subtitle_homePetani"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tl_title"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_info_total_deteksi"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/white"
                 app:layout_constraintTop_toBottomOf="@id/iv_profile_petani">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_title"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="10dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/square_library"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/abelregular"
+                        android:textSize="18sp"
+                        android:textColor="@color/green1"
+                        android:text="@string/riwayat_deteksi_bulan_ini_30"/>
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/deteksi_terbaru"
+            android:fontFamily="@font/abelregular"
+            android:textSize="24sp"
+            android:textFontWeight="600"
+            android:textColor="@color/gray700"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_deteksi_terbaru"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_riwayat_petani"
+            tools:itemCount="2"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rekomendasi_obat"
+            android:fontFamily="@font/abelregular"
+            android:textSize="24sp"
+            android:textFontWeight="600"
+            android:textColor="@color/gray700"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            tools:listitem="@layout/item_rekomendasi_obat"
+             />
+
+    </LinearLayout>
 </ScrollView>

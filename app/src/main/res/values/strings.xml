@@ -33,6 +33,12 @@
     <string name="example_tv_riwayat_warning">Tindakan diperlukan</string>
     <string name="tv_welcome_home_petani">Selamat Datang,</string>
     <string name="pantau_kesehatan_tanamanmu_bersama_kami">Pantau kesehatan tanamanmu bersama kami</string>
+    <string name="deteksi_terbaru">Deteksi Terbaru</string>
+    <string name="rekomendasi_obat">Rekomendasi Obat</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="rp0">Rp0</string>
+    <string name="riwayat_deteksi_bulan_ini_30">Riwayat deteksi bulan ini : 30</string>
 
 
 </resources>
