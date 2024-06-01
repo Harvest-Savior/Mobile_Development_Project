@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import androidx.core.net.toUri
 import com.example.harvest_savior_mobile_dev.R
 import com.example.harvest_savior_mobile_dev.databinding.FragmentDeteksiBinding
 import com.example.harvest_savior_mobile_dev.lib.petani.camera_activity.view.CameraPetaniActivity
+import com.example.harvest_savior_mobile_dev.lib.petani.hasil_deteksi_activity.view.HasilDeteksiActivity
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -64,7 +66,7 @@ class DeteksiFragment : Fragment() {
     ) {
         if (it.resultCode == CameraPetaniActivity.CAMERAX_RESULT) {
             currentImageUri = it.data?.getStringExtra(CameraPetaniActivity.EXTRA_CAMERAX_IMAGE)?.toUri()
-
+            showImage()
         }
     }
 
@@ -72,6 +74,16 @@ class DeteksiFragment : Fragment() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_PICK_PHOTO)
+
+    }
+
+    private fun showImage() {
+        currentImageUri?.let {
+            Log.d("Image URI", "showImage: $it")
+            val intent = Intent(activity, HasilDeteksiActivity::class.java)
+            intent.putExtra(EXTRA_CAMERAX_IMAGE, it)
+            startActivity(intent)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -95,5 +107,8 @@ class DeteksiFragment : Fragment() {
                 }
             }
         private const val REQUEST_PICK_PHOTO = 1
+        private const val TAG = "MainActivity"
+        private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
+        const val EXTRA_CAMERAX_IMAGE = "CameraX Image"
     }
 }

@@ -19,4 +19,22 @@
         <item name="android:fontFamily">@font/abelregular</item>
         <item name="android:textSize">24sp</item>
     </style>
+
+    <style name="CustomCardViewTindakan" parent="@style/Widget.Material3.CardView.Filled">
+        <item name="backgroundTint">@color/red2</item>
+        <item name="android:strokeAlpha">0</item>
+    </style>
+
+    <style name="CustomCardViewNamaToko" parent="@style/Widget.Material3.CardView.Filled">
+        <item name="backgroundTint">@color/green2</item>
+        <item name="android:strokeAlpha">0</item>
+    </style>
+
+    <style name="CustomFloatButtonCallToko" parent="@style/Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/green1</item>
+        <item name="cornerRadius">30dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="iconTint">@color/white</item>
+        <item name="android:strokeAlpha">0</item>
+    </style>
 </resources>

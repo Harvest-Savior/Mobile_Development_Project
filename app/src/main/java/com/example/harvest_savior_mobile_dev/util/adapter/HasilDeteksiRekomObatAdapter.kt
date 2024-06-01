@@ -9,47 +9,50 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.harvest_savior_mobile_dev.R
 import com.example.harvest_savior_mobile_dev.data.response.Obat
-import com.example.harvest_savior_mobile_dev.data.response.ObatListItem
 import com.example.harvest_savior_mobile_dev.lib.petani.detail_obat_activity.view.DetailObatActivity
 
-class RekomendasiObatAdapter(private val itemList: List<Obat>, private val  context: Context) : RecyclerView.Adapter<RekomendasiObatAdapter.ObatViewHolder>() {
-
+class HasilDeteksiRekomObatAdapter(private val itemList: List<Obat>, private val context: Context) : RecyclerView.Adapter<HasilDeteksiRekomObatAdapter.ObatViewHolder>() {
 
     inner class ObatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTitle: TextView = itemView.findViewById(R.id.tv_title_rekomen)
         val tvDescription: TextView = itemView.findViewById(R.id.tvDescription_rekomen)
         val tvPrice: TextView = itemView.findViewById(R.id.tvPrice_rekomen)
 
-        fun bind(obat: Obat) {
+        fun bind(obat:Obat) {
             tvTitle.text = obat.title
             tvDescription.text = obat.description
             tvPrice.text = obat.price
 
             itemView.setOnClickListener {
                 val intent = Intent(context, DetailObatActivity::class.java).apply {
-                    putExtra(TAG_NAMA_OBAT,tvTitle.text.toString())
-
-
+                    putExtra(TAG_NAMA_OBAT, tvTitle.text.toString())
                 }
-                itemView.context.startActivity(intent)
 
+                itemView.context.startActivity(intent)
             }
+
         }
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ObatViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): HasilDeteksiRekomObatAdapter.ObatViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_rekomendasi_obat, parent, false)
         return ObatViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
-
-    override fun onBindViewHolder(holder: ObatViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: HasilDeteksiRekomObatAdapter.ObatViewHolder,
+        position: Int
+    ) {
         val item = itemList[position]
         holder.bind(item)
+
+    }
+
+    override fun getItemCount(): Int {
+        return itemList.size
     }
 
     companion object {

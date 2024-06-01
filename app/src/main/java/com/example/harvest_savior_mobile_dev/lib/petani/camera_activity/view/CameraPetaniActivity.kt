@@ -26,6 +26,21 @@ class CameraPetaniActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraPetaniBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.switchCamera.setOnClickListener {
+            cameraSelector =
+                if (cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) CameraSelector.DEFAULT_FRONT_CAMERA
+            else CameraSelector.DEFAULT_BACK_CAMERA
+            startCamera()
+        }
+
+        binding.captureImage.setOnClickListener { takePhoto() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        hideSystemUI()
+        startCamera()
     }
 
     private fun startCamera() {
@@ -118,6 +133,16 @@ class CameraPetaniActivity : AppCompatActivity() {
                 imageCapture?.targetRotation = rotation
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        orientationEventListener.enable()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        orientationEventListener.enable()
     }
 
     companion object {

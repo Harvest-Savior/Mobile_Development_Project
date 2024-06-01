@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         recyclerView = root.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = GridLayoutManager(context, 2)
-        rekomendasiObatAdapter = RekomendasiObatAdapter(rekomendasiObatList)
+        rekomendasiObatAdapter = RekomendasiObatAdapter(rekomendasiObatList, requireActivity())
         recyclerView.adapter = rekomendasiObatAdapter
         return root
     }
