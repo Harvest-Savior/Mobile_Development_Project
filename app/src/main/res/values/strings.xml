@@ -54,6 +54,8 @@
     <string name="alamat">Alamat</string>
     <string name="nilai_alamat">Jl. Raya Cipanas No. 120, Cipanas, Cianjur, Jawa Barat</string>
     <string name="telfon_toko">Telfon Toko</string>
+    <string name="masuk_ke_akun_penjual_anda">Masuk ke Akun Penjual Anda</string>
+    <string name="klik_disini_untuk_login_sebagai_petani">Klik disini untuk login sebagai petani</string>
 
 
 </resources>
