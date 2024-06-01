@@ -65,6 +65,14 @@
     <string name="manajemen_stok_obatmu_disini">Manajemen stok obatmu disini</string>
     <string name="produk_obat">Produk Obat</string>
     <string name="ubah">Ubah</string>
+    <string name="tambah_produk_obat">Tambah Produk Obat</string>
+    <string name="hint_nama_obat">Fungisida</string>
+    <string name="deskripsi_obat">Deskripsi Obat</string>
+    <string name="untuk_mengendalikan_penyakit_seperti_nopatek_dan_sidazeb">Untuk mengendalikan penyakit, seperti NOPATEK dan Sidazeb</string>
+    <string name="tv_hargaObat">Harga Obat</string>
+    <string name="simpan">Simpan</string>
+    <string name="edit_produk_obat">Edit Produk Obat</string>
+    <string name="tambah_obat">Tambah Obat</string>
 
 
 </resources>

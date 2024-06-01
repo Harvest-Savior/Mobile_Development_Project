@@ -61,7 +61,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="10dp">
+            android:padding="20dp">
             <TextView
                 android:id="@+id/tv_produk_obat"
                 android:layout_width="wrap_content"
@@ -98,7 +98,8 @@
                 android:id="@+id/rv_produk_obat"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:padding="10dp"
+
+                tools:listitem="@layout/item_produk_obat"
                 app:layout_constraintTop_toBottomOf="@id/tv_produk_obat"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

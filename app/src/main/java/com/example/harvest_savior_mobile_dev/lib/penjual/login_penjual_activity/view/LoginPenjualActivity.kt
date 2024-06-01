@@ -7,6 +7,7 @@ import com.example.harvest_savior_mobile_dev.R
 import com.example.harvest_savior_mobile_dev.databinding.ActivityLoginPenjualBinding
 import com.example.harvest_savior_mobile_dev.databinding.ActivityLoginPetaniBinding
 import com.example.harvest_savior_mobile_dev.lib.penjual.daftar_penjual_activity.view.DaftarPenjualActivity
+import com.example.harvest_savior_mobile_dev.lib.penjual.home_penjual_activity.view.HomePenjualActivity
 import com.example.harvest_savior_mobile_dev.lib.penjual.login_penjual_activity.viewmodel.LoginPenjualViewModel
 import com.example.harvest_savior_mobile_dev.lib.petani.login_petani_activity.view.LoginPetaniActivity
 import com.example.harvest_savior_mobile_dev.util.AnimationUtil
@@ -25,6 +26,11 @@ class LoginPenjualActivity : AppCompatActivity() {
 
         binding.tvDaftarPenjual.setOnClickListener {
             val intent = Intent(this, DaftarPenjualActivity::class.java)
+            AnimationUtil.startActivityWithSlideAnimation(this, intent)
+        }
+
+        binding.btnLoginPenjual.setOnClickListener {
+            val intent = Intent(this, HomePenjualActivity::class.java)
             AnimationUtil.startActivityWithSlideAnimation(this, intent)
         }
     }
