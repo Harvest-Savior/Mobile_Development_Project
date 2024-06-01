@@ -110,5 +110,17 @@
 
 
     </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_add_produk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_add_24_white"
+            style="@style/CustomFloatButtonCallToko"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="30dp"
+            android:layout_marginEnd="20dp"
+            android:contentDescription="Add Produk Obat" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
