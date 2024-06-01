@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_container_list_produk"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/stroke_button"
+
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+            <ImageView
+                android:id="@+id/iv_produk_obat"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/example_iv_riwayat"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:backgroundTint="@color/green2"
+                />
+
+            <TextView
+                android:id="@+id/tv_nama_obat"
+                android:layout_width="wrap_content"
+                android:text="@string/nama_obat"
+                android:fontFamily="@font/intersemibold"
+                android:textSize="16sp"
+                android:textColor="@color/gray700"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                app:layout_constraintStart_toEndOf="@id/iv_produk_obat"
+                app:layout_constraintTop_toTopOf="@id/iv_produk_obat"
+                app:layout_constraintBottom_toTopOf="@id/tv_deskripsi_obat"/>
+            <TextView
+                android:id="@+id/tv_deskripsi_obat"
+                android:layout_width="wrap_content"
+                android:text="@string/description"
+                android:fontFamily="@font/interregular"
+                android:textSize="14sp"
+                android:textColor="@color/gray400"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                app:layout_constraintStart_toEndOf="@id/iv_produk_obat"
+                app:layout_constraintTop_toBottomOf="@id/tv_nama_obat"/>
+
+            <TextView
+                android:id="@+id/tv_label_stok"
+                android:layout_width="40dp"
+                android:text="@string/stok"
+                android:fontFamily="@font/interregular"
+                android:textSize="14sp"
+                android:textColor="@color/gray400"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                app:layout_constraintStart_toEndOf="@id/iv_produk_obat"
+                app:layout_constraintTop_toBottomOf="@id/tv_deskripsi_obat"
+                app:layout_constraintBottom_toBottomOf="@id/iv_produk_obat"/>
+
+            <TextView
+                android:id="@+id/tv_nilai_stok"
+                android:layout_width="wrap_content"
+                android:text="@string/stok"
+                android:fontFamily="@font/interregular"
+                android:textSize="14sp"
+                android:textColor="@color/green1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                app:layout_constraintStart_toEndOf="@id/tv_label_stok"
+                app:layout_constraintTop_toBottomOf="@id/tv_deskripsi_obat"
+                app:layout_constraintBottom_toBottomOf="@id/iv_produk_obat"/>
+
+            <Button
+                android:id="@+id/btn_ubah_obat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/ubah"
+                android:textSize="18sp"
+                android:textColor="@color/green1"
+                android:fontFamily="@font/abelregular"
+                app:layout_constraintTop_toBottomOf="@id/iv_produk_obat"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/stroke_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_hapus_obat"
+
+                />
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btn_hapus_obat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:backgroundTint="@color/orange500"
+
+                android:fontFamily="@font/abelregular"
+                app:layout_constraintTop_toBottomOf="@id/iv_produk_obat"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="40dp"
+                    android:paddingVertical="10dp"
+                    android:src="@drawable/trash_2"/>
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

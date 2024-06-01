@@ -56,6 +56,15 @@
     <string name="telfon_toko">Telfon Toko</string>
     <string name="masuk_ke_akun_penjual_anda">Masuk ke Akun Penjual Anda</string>
     <string name="klik_disini_untuk_login_sebagai_petani">Klik disini untuk login sebagai petani</string>
+    <string name="nomor">Nomor</string>
+    <string name="nomor_aktif_anda">Nomor aktif anda</string>
+    <string name="hint_nomor">08**********</string>
+    <string name="alamat_toko">Alamat Toko</string>
+    <string name="alamat_toko_anda">Alamat toko anda</string>
+    <string name="nama_toko_anda">Nama toko anda</string>
+    <string name="manajemen_stok_obatmu_disini">Manajemen stok obatmu disini</string>
+    <string name="produk_obat">Produk Obat</string>
+    <string name="ubah">Ubah</string>
 
 
 </resources>

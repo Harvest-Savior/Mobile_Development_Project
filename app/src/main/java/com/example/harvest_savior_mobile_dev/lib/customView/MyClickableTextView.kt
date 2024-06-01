@@ -24,7 +24,7 @@ class MyClickableTextView @JvmOverloads constructor(
         movementMethod = LinkMovementMethod.getInstance()
     }
 
-    fun setClickableText(fullText: String, clickablePart: String) {
+    fun setClickableText(fullText: String, clickablePart: String, targetActivity:Class<*>) {
         val spannableString = SpannableString(fullText)
 
         val startIndex = fullText.indexOf(clickablePart)
@@ -33,7 +33,7 @@ class MyClickableTextView @JvmOverloads constructor(
         if (startIndex >= 0) {
             val clickableSpan = object : ClickableSpan() {
                 override fun onClick(widget: View) {
-                    val intent = Intent(context, LoginPenjualActivity::class.java)
+                    val intent = Intent(context, targetActivity)
                     context.startActivity(intent)
                 }
             }
@@ -45,11 +45,11 @@ class MyClickableTextView @JvmOverloads constructor(
         }
     }
 
-    fun setClickableText(fullText: String, numOfWords: Int) {
+    fun setClickableText(fullText: String, numOfWords: Int, targetActivity: Class<*>) {
         val words = fullText.split(" ")
         if (words.size >= numOfWords) {
             val clickablePart = words.take(numOfWords).joinToString(" ")
-            setClickableText(fullText, clickablePart)
+            setClickableText(fullText, clickablePart, targetActivity)
         }
     }
     }

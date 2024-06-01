@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.harvest_savior_mobile_dev.R
 import com.example.harvest_savior_mobile_dev.databinding.ActivityLoginPetaniBinding
+import com.example.harvest_savior_mobile_dev.lib.penjual.login_penjual_activity.view.LoginPenjualActivity
 import com.example.harvest_savior_mobile_dev.lib.petani.daftar_petani_activity.view.DaftarPetaniActivity
 import com.example.harvest_savior_mobile_dev.lib.petani.dashboard_petani_activity.view.DashboardPetaniActivity
 import com.example.harvest_savior_mobile_dev.lib.petani.login_petani_activity.viewmodel.LoginPetaniViewModel
@@ -21,7 +22,7 @@ class LoginPetaniActivity : AppCompatActivity() {
 
         val clickAbleText = binding.tvToPenjual
         val fullText = getString(R.string.tv_toPenjual)
-        clickAbleText.setClickableText(fullText,2)
+        clickAbleText.setClickableText(fullText,2,LoginPenjualActivity::class.java)
 
         binding.tvDaftar.setOnClickListener {
             val intent = Intent(this, DaftarPetaniActivity::class.java)
