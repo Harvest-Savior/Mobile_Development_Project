@@ -8,16 +8,26 @@ import com.example.harvest_savior_mobile_dev.lib.petani.daftar_petani_activity.v
 import com.example.harvest_savior_mobile_dev.util.AnimationUtil
 
 class DaftarPetaniActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityDaftarPetaniBinding
+    private var _binding: ActivityDaftarPetaniBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var viewModel : DaftarPetaniViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDaftarPetaniBinding.inflate(layoutInflater)
+        _binding = ActivityDaftarPetaniBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
         AnimationUtil.finishActivityWithSlideAnimation(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

@@ -11,7 +11,7 @@ class ApiConfig {
 
     companion object {
         fun getApiService(token : String? = null) : ApiService {
-            val baseUrl = BuildConfig.BUILD_TYPE
+            val baseUrl = BuildConfig.BASE_URI
 
             val loggingInterceptor =
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
