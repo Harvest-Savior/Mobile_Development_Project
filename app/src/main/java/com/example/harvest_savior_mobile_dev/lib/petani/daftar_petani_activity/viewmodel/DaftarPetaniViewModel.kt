@@ -13,12 +13,18 @@ class DaftarPetaniViewModel(private val userFarmerRepository: UserFarmerReposito
     private val _registerResult = MutableLiveData<Result<RegisterFarmerResponse>>()
     val registerResult : LiveData<Result<RegisterFarmerResponse>> = _registerResult
 
+    private val _loading = MutableLiveData<Boolean>()
+    val loading : LiveData<Boolean> = _loading
+
     fun registerFarmer(nama:String, email:String,pass:String) {
+        _loading.value = true
         viewModelScope.launch {
             try {
+                _loading.value = false
                 val response = userFarmerRepository.register(nama,email,pass)
                 _registerResult.postValue(Result.success(response))
             } catch (e:Exception) {
+                _loading.value = false
                 _registerResult.postValue(Result.failure(e))
             }
         }

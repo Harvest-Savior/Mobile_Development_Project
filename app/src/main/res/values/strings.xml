@@ -73,6 +73,14 @@
     <string name="simpan">Simpan</string>
     <string name="edit_produk_obat">Edit Produk Obat</string>
     <string name="tambah_obat">Tambah Obat</string>
+    <string name="invalid_email_error">Email tidak valid</string>
+    <string name="login_needInput">Isi semua input</string>
+    <string name="error_password_length">Panjang kata sandi harus lebih dari 8 karakter</string>
+    <string name="emailHint">Masukan email</string>
+    <string name="error_regist_allnull">Semua masukan harus diisi</string>
+    <string name="confirmPw_hint">Masukan konfirmasi kata sandi</string>
+    <string name="name_hint">Masukan nama anda</string>
+    <string name="error_confirm_password">Konfirmasi kata sandi tidak sama</string>
 
 
 </resources>

@@ -6,9 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.harvest_savior_mobile_dev.data.response.LoginFarmerResponse
 import com.example.harvest_savior_mobile_dev.repository.UserFarmerRepository
+import com.example.harvest_savior_mobile_dev.util.LoginPreference
 import kotlinx.coroutines.launch
 
-class LoginPetaniViewModel(private val userFarmerRepository: UserFarmerRepository) : ViewModel() {
+class LoginPetaniViewModel(private val userFarmerRepository: UserFarmerRepository, private val loginPreference: LoginPreference) : ViewModel() {
     private val _loginResult = MutableLiveData<Result<LoginFarmerResponse>>()
     val loginResult : LiveData<Result<LoginFarmerResponse>> = _loginResult
 
