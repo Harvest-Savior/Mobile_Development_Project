@@ -16,6 +16,7 @@ import com.example.harvest_savior_mobile_dev.lib.petani.daftar_petani_activity.v
 import com.example.harvest_savior_mobile_dev.lib.petani.login_petani_activity.view.LoginPetaniActivity
 import com.example.harvest_savior_mobile_dev.repository.UserFarmerRepository
 import com.example.harvest_savior_mobile_dev.util.AnimationUtil
+import com.example.harvest_savior_mobile_dev.util.LoginPreference
 import com.google.android.material.snackbar.Snackbar
 
 class DaftarPetaniActivity : AppCompatActivity() {
@@ -24,6 +25,7 @@ class DaftarPetaniActivity : AppCompatActivity() {
 
     private lateinit var viewModel : DaftarPetaniViewModel
     private lateinit var userFarmerRepository: UserFarmerRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityDaftarPetaniBinding.inflate(layoutInflater)
@@ -31,6 +33,7 @@ class DaftarPetaniActivity : AppCompatActivity() {
 
         val apiService = ApiConfig.getApiService()
         userFarmerRepository = UserFarmerRepository(apiService)
+
 
         val daftarViewModelFactory = RegisterViewModelFactory(userFarmerRepository)
         viewModel = ViewModelProvider(this, daftarViewModelFactory).get(DaftarPetaniViewModel::class.java)
@@ -70,7 +73,6 @@ class DaftarPetaniActivity : AppCompatActivity() {
 
         viewModel.registerResult.observe(this) {
             it.onSuccess {
-
                 Toast.makeText(this, "Berhasil", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, LoginPetaniActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -94,8 +96,6 @@ class DaftarPetaniActivity : AppCompatActivity() {
             binding.progressDaftarPetani.visibility = View.GONE
         }
     }
-
-    private fun register() {}
 
     override fun onBackPressed() {
         super.onBackPressed()

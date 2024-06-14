@@ -3,6 +3,7 @@ package com.example.harvest_savior_mobile_dev.lib.petani.login_petani_activity.v
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.harvest_savior_mobile_dev.data.response.LoginFarmerResponse
 import com.example.harvest_savior_mobile_dev.repository.UserFarmerRepository
@@ -13,6 +14,9 @@ class LoginPetaniViewModel(private val userFarmerRepository: UserFarmerRepositor
     private val _loginResult = MutableLiveData<Result<LoginFarmerResponse>>()
     val loginResult : LiveData<Result<LoginFarmerResponse>> = _loginResult
 
+    private val _loading = MutableLiveData<Boolean>()
+    val loading : LiveData<Boolean> = _loading
+
     fun login(email: String, pass: String) {
         viewModelScope.launch {
             try {
@@ -21,6 +25,16 @@ class LoginPetaniViewModel(private val userFarmerRepository: UserFarmerRepositor
             } catch (e : Exception) {
                 _loginResult.postValue(Result.failure(e))
             }
+        }
+    }
+
+    fun getLoginSession(): LiveData<LoginFarmerResponse?> {
+        return loginPreference.getLoginSession().asLiveData()
+    }
+
+    fun saveLoginSession(isLoged : Result<LoginFarmerResponse>) {
+        viewModelScope.launch {
+            loginPreference.saveLoginSession(isLoged)
         }
     }
 }

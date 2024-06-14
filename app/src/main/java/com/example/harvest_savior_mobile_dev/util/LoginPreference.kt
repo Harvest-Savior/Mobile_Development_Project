@@ -17,7 +17,7 @@ val Context.datastore : DataStore<Preferences> by preferencesDataStore(name = "l
 open class LoginPreference(private val dataStore: DataStore<Preferences>) {
     val LOGIN_RESPONSE_KEY = stringPreferencesKey("login_response")
 
-    suspend fun saveLoginSession(token: LoginFarmerResponse) {
+    suspend fun saveLoginSession(token: Result<LoginFarmerResponse>) {
         val jsonString = Gson().toJson(token)
         dataStore.edit { preference ->
             preference[LOGIN_RESPONSE_KEY] = jsonString
