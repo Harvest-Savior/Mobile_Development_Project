@@ -6,17 +6,15 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.harvest_savior_mobile_dev.R
 import com.example.harvest_savior_mobile_dev.data.retrofit.ApiConfig
 import com.example.harvest_savior_mobile_dev.databinding.ActivityDaftarPetaniBinding
-import com.example.harvest_savior_mobile_dev.lib.ViewModelFactory.RegisterViewModelFactory
+import com.example.harvest_savior_mobile_dev.lib.ViewModelFactory.petani.RegisterViewModelFactory
 import com.example.harvest_savior_mobile_dev.lib.petani.daftar_petani_activity.viewmodel.DaftarPetaniViewModel
 import com.example.harvest_savior_mobile_dev.lib.petani.login_petani_activity.view.LoginPetaniActivity
 import com.example.harvest_savior_mobile_dev.repository.UserFarmerRepository
 import com.example.harvest_savior_mobile_dev.util.AnimationUtil
-import com.example.harvest_savior_mobile_dev.util.LoginPreference
 import com.google.android.material.snackbar.Snackbar
 
 class DaftarPetaniActivity : AppCompatActivity() {

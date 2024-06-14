@@ -8,9 +8,8 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.example.harvest_savior_mobile_dev.R
 import com.example.harvest_savior_mobile_dev.data.retrofit.ApiConfig
-import com.example.harvest_savior_mobile_dev.data.retrofit.ApiService
 import com.example.harvest_savior_mobile_dev.databinding.ActivityLoginPetaniBinding
-import com.example.harvest_savior_mobile_dev.lib.ViewModelFactory.LoginViewModelFactory
+import com.example.harvest_savior_mobile_dev.lib.ViewModelFactory.petani.LoginViewModelFactory
 import com.example.harvest_savior_mobile_dev.lib.penjual.login_penjual_activity.view.LoginPenjualActivity
 import com.example.harvest_savior_mobile_dev.lib.petani.daftar_petani_activity.view.DaftarPetaniActivity
 import com.example.harvest_savior_mobile_dev.lib.petani.dashboard_petani_activity.view.DashboardPetaniActivity

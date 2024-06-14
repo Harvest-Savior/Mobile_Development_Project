@@ -1,4 +1,4 @@
-package com.example.harvest_savior_mobile_dev.lib.ViewModelFactory
+package com.example.harvest_savior_mobile_dev.lib.ViewModelFactory.petani
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
