@@ -32,7 +32,7 @@ class LoginPetaniViewModel(private val userFarmerRepository: UserFarmerRepositor
         return loginPreference.getLoginSession().asLiveData()
     }
 
-    fun saveLoginSession(isLoged : Result<LoginFarmerResponse>) {
+    fun saveLoginSession(isLoged : LoginFarmerResponse) {
         viewModelScope.launch {
             loginPreference.saveLoginSession(isLoged)
         }

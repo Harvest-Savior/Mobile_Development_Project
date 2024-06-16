@@ -7,6 +7,16 @@
     android:padding="20dp"
     tools:context=".lib.penjual.login_penjual_activity.view.LoginPenjualActivity">
 
+    <ProgressBar
+        android:id="@+id/progressLoginPenjual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"/>
+
     <TextView
         android:id="@+id/tv_title_penjual"
         android:layout_width="wrap_content"

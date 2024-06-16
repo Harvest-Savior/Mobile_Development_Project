@@ -1,7 +1,6 @@
 package com.example.harvest_savior_mobile_dev.util
 
 import android.content.Context
-import android.preference.Preference
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -14,10 +13,11 @@ import kotlinx.coroutines.flow.map
 
 val Context.datastore : DataStore<Preferences> by preferencesDataStore(name = "login")
 
+
 open class LoginPreference(private val dataStore: DataStore<Preferences>) {
     val LOGIN_RESPONSE_KEY = stringPreferencesKey("login_response")
 
-    suspend fun saveLoginSession(token: Result<LoginFarmerResponse>) {
+    suspend fun saveLoginSession(token: LoginFarmerResponse) {
         val jsonString = Gson().toJson(token)
         dataStore.edit { preference ->
             preference[LOGIN_RESPONSE_KEY] = jsonString
@@ -25,7 +25,7 @@ open class LoginPreference(private val dataStore: DataStore<Preferences>) {
 
     }
 
-    fun getLoginSession() : Flow<LoginFarmerResponse> {
+    fun getLoginSession() : Flow<LoginFarmerResponse?> {
         return dataStore.data.map { preference ->
             val jsonString = preference[LOGIN_RESPONSE_KEY]
             Gson().fromJson(jsonString, LoginFarmerResponse::class.java)

@@ -19,6 +19,9 @@ import com.example.harvest_savior_mobile_dev.lib.petani.login_petani_activity.vi
 import com.example.harvest_savior_mobile_dev.repository.MedicineStoreRepository
 import com.example.harvest_savior_mobile_dev.repository.UserFarmerRepository
 import com.example.harvest_savior_mobile_dev.util.AnimationUtil
+import com.example.harvest_savior_mobile_dev.util.LoginStorePreference
+import com.example.harvest_savior_mobile_dev.util.datastore
+import com.example.harvest_savior_mobile_dev.util.datastoreStore
 import com.google.android.material.snackbar.Snackbar
 
 class DaftarPenjualActivity : AppCompatActivity() {
@@ -28,13 +31,15 @@ class DaftarPenjualActivity : AppCompatActivity() {
 
     private lateinit var viewModel: DaftarPenjualViewModel
     private lateinit var medicineStoreRepository: MedicineStoreRepository
+    private lateinit var pref : LoginStorePreference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityDaftarPenjualBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        pref = LoginStorePreference.getInstance(application.datastoreStore)
         val apiService = ApiConfig.getApiService()
-        medicineStoreRepository = MedicineStoreRepository(apiService)
+        medicineStoreRepository = MedicineStoreRepository(apiService,pref)
 
 
         val daftarViewModelFactory = StoreViewModelFactory(medicineStoreRepository)

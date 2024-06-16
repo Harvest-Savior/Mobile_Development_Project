@@ -29,7 +29,8 @@ class DeteksiFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var currentImageUri: Uri? = null
-    private lateinit var binding: FragmentDeteksiBinding
+    private var _binding: FragmentDeteksiBinding? = null
+    private val binding get() = _binding!!
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +45,7 @@ class DeteksiFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDeteksiBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentDeteksiBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 

@@ -24,7 +24,8 @@ import com.example.harvest_savior_mobile_dev.lib.petani.dashboard_petani_activit
 
 class DashboardPetaniActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityDashboardPetaniBinding
+    private var _binding: ActivityDashboardPetaniBinding? = null
+    private val binding get() = _binding!!
     private lateinit var viewModel: DashboardPetaniViewModel
 
 
@@ -44,9 +45,13 @@ class DashboardPetaniActivity : AppCompatActivity() {
             this,
             REQUIRED_PERMISSION
         ) == PackageManager.PERMISSION_GRANTED
+
+    private var token2 : String? = null
+    private var namaUser : String? = null
+    private var emailToko : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDashboardPetaniBinding.inflate(layoutInflater)
+        _binding = ActivityDashboardPetaniBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (!allPermissionsGranted()) {
             requestPermissionLauncher.launch(REQUIRED_PERMISSION)
@@ -82,9 +87,11 @@ class DashboardPetaniActivity : AppCompatActivity() {
                 bottomNav.menu.getItem(position).isChecked = true
             }
         })
+
+        token2 = intent.getStringExtra("token")
+        namaUser = intent.getStringExtra("namaToko")
+        emailToko = intent.getStringExtra("email")
     }
-
-
 
     companion object {
         private const val TAG = "MainActivity"

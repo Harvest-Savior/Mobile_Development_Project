@@ -81,6 +81,7 @@
     <string name="confirmPw_hint">Masukan konfirmasi kata sandi</string>
     <string name="name_hint">Masukan nama anda</string>
     <string name="error_confirm_password">Konfirmasi kata sandi tidak sama</string>
+    <string name="keluar">Keluar</string>
 
 
 </resources>

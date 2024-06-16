@@ -7,9 +7,12 @@ import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.example.harvest_savior_mobile_dev.R
+import com.example.harvest_savior_mobile_dev.data.response.LoginFarmerResponse
+import com.example.harvest_savior_mobile_dev.data.response.LoginStoreResponse
 import com.example.harvest_savior_mobile_dev.data.retrofit.ApiConfig
 import com.example.harvest_savior_mobile_dev.databinding.ActivityLoginPetaniBinding
 import com.example.harvest_savior_mobile_dev.lib.ViewModelFactory.petani.LoginViewModelFactory
+import com.example.harvest_savior_mobile_dev.lib.penjual.home_penjual_activity.view.HomePenjualActivity
 import com.example.harvest_savior_mobile_dev.lib.penjual.login_penjual_activity.view.LoginPenjualActivity
 import com.example.harvest_savior_mobile_dev.lib.petani.daftar_petani_activity.view.DaftarPetaniActivity
 import com.example.harvest_savior_mobile_dev.lib.petani.dashboard_petani_activity.view.DashboardPetaniActivity
@@ -44,16 +47,34 @@ class LoginPetaniActivity : AppCompatActivity() {
         val fullText = getString(R.string.tv_toPenjual)
         clickAbleText.setClickableText(fullText,2,LoginPenjualActivity::class.java)
 
-        viewModel.loginResult.observe(this) {response ->
-            response.onSuccess {
-                val intent = Intent(this, DashboardPetaniActivity::class.java)
-//                intent.putExtra("response",response)
+        viewModel.loginResult.observe(this) {
+            it.onSuccess { response ->
+                response.data?.let { data ->
+                    val intent = Intent(this, DashboardPetaniActivity::class.java).apply {
+                        putExtra("token", data.token)
+                        putExtra("namaToko", data.namaLengkap)
+                        putExtra("email", data.email)
+                    }
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    AnimationUtil.startActivityWithSlideAnimation(this, intent)
+                    finish()
+                    viewModel.saveLoginSession(response)
+                    Snackbar.make(window.decorView.rootView, "Berhasil Login", Snackbar.LENGTH_SHORT).show()
+                }
+            }.onFailure {
+                Snackbar.make(window.decorView.rootView, "Gagal Login", Snackbar.LENGTH_SHORT).show()
+            }
+        }
+
+        viewModel.getLoginSession().observe(this) { isLoged : LoginFarmerResponse? ->
+            if (isLoged != null){
+                val intent = Intent(this, DashboardPetaniActivity::class.java).apply {
+                    putExtra("token", isLoged.data?.token)
+                    putExtra("namaToko", isLoged.data?.namaLengkap)
+                    putExtra("email", isLoged.data?.email)
+                }
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 AnimationUtil.startActivityWithSlideAnimation(this, intent)
-//                viewModel.saveLoginSession(response)
-            }.onFailure {
-
-
             }
         }
 
@@ -76,6 +97,10 @@ class LoginPetaniActivity : AppCompatActivity() {
             } else {
                 Snackbar.make(window.decorView.rootView, R.string.error_regist_allnull, Snackbar.LENGTH_SHORT).show()
             }
+        }
+
+        viewModel.loading.observe(this) {
+            showLoading(it)
         }
     }
 

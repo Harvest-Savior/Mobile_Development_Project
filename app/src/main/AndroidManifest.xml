@@ -22,6 +22,12 @@
         android:theme="@style/Theme.Harvest_Savior_MobileDev"
         tools:targetApi="31">
         <activity
+            android:name=".lib.petani.setting_activity.activity.SettingPetaniActivity"
+            android:exported="false" />
+        <activity
+            android:name=".lib.penjual.setting_activity.activity.SettingPenjualActivity"
+            android:exported="false" />
+        <activity
             android:name=".lib.penjual.tambah_obat_activity.view.TambahObatActivity"
             android:exported="false" />
         <activity
