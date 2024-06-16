@@ -1,6 +1,7 @@
 package com.example.harvest_savior_mobile_dev.data.retrofit
 
 import com.example.harvest_savior_mobile_dev.data.response.AddObatResponse
+import com.example.harvest_savior_mobile_dev.data.response.GetObatResponse
 import com.example.harvest_savior_mobile_dev.data.response.LoginFarmerResponse
 import com.example.harvest_savior_mobile_dev.data.response.LoginStoreResponse
 import com.example.harvest_savior_mobile_dev.data.response.RegisterFarmerResponse
@@ -10,6 +11,7 @@ import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -59,5 +61,10 @@ interface ApiService {
         @Part("harga") harga : Int,
         @Part photo: MultipartBody.Part?
     ) : AddObatResponse
+
+    @GET("getMedicines")
+    suspend fun getObat (
+        @Header("Authorization") token: String
+    ) : GetObatResponse
 
 }

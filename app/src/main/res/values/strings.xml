@@ -82,6 +82,9 @@
     <string name="name_hint">Masukan nama anda</string>
     <string name="error_confirm_password">Konfirmasi kata sandi tidak sama</string>
     <string name="keluar">Keluar</string>
+    <string name="produk_obat_anda_kosong">Produk Obat Anda Kosong</string>
+    <string name="ubah_gambar">Ubah Gambar</string>
+    <string name="buka_galeri">Buka Galeri</string>
 
 
 </resources>

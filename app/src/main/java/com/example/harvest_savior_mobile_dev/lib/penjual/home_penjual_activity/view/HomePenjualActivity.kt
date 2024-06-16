@@ -5,12 +5,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.harvest_savior_mobile_dev.R
+import com.example.harvest_savior_mobile_dev.data.response.DataItemGetObat
 import com.example.harvest_savior_mobile_dev.data.response.Obat
 import com.example.harvest_savior_mobile_dev.data.retrofit.ApiConfig
 import com.example.harvest_savior_mobile_dev.databinding.ActivityHomePenjualBinding
@@ -38,11 +40,6 @@ class HomePenjualActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var produkObatAdapter: ProdukObatPenjualAdapter
-    private val rekomendasiObatList = listOf(
-        Obat("Fungisida", "Untuk mengendalikan penyakit, seperti NOPAT...", "Rp5.500"),
-        Obat("Insektisida", "Untuk mengendalikan hama, seperti Pounce, B...", "Rp6.500")
-
-    )
 
     private var token2 : String? = null
     private var namToko : String? = null
@@ -54,7 +51,7 @@ class HomePenjualActivity : AppCompatActivity() {
 
         recyclerView = binding.rvProdukObat
         recyclerView.layoutManager = LinearLayoutManager(this)
-        produkObatAdapter = ProdukObatPenjualAdapter(rekomendasiObatList, this)
+        produkObatAdapter = ProdukObatPenjualAdapter(emptyList(), this)
         recyclerView.adapter = produkObatAdapter
 
         pref = LoginStorePreference.getInstance(application.datastoreStore)
@@ -67,20 +64,44 @@ class HomePenjualActivity : AppCompatActivity() {
         namToko = intent.getStringExtra("namaToko")
         emailToko = intent.getStringExtra("email")
 
+        viewModel.getObatResult.observe(this) {
+            it.onSuccess {
+                it.data?.let {data ->
+                    if(data != null ){
+                    setListData(data)
+                    }
+                }
+            }
+        }
 
+        viewModel.getObat(token2)
 
         Log.d(TAG,"token : $token2")
-
-
         binding.tvWelcomeHomePetani.text = "Selamat Datang, $namToko"
 
         binding.btnAddProduk.setOnClickListener {
-            val intent = Intent(this, TambahObatActivity::class.java)
+            val intent = Intent(this, TambahObatActivity::class.java).apply {
+                putExtra("token", token2)
+                putExtra("namaToko", namToko)
+                putExtra("email", emailToko)
+            }
             AnimationUtil.startActivityWithSlideAnimation(this, intent)
         }
+
         binding.ivProfilePetani.setOnClickListener {
             val intent = Intent(this, SettingPenjualActivity::class.java)
             AnimationUtil.startActivityWithSlideAnimation(this, intent)
+        }
+    }
+
+    private fun setListData(data: List<DataItemGetObat?>) {
+        val adapter = ProdukObatPenjualAdapter(data,this)
+        binding.rvProdukObat.adapter = adapter
+
+        if (data.isEmpty()) {
+            binding.tvListObatKosong.visibility = View.VISIBLE
+        } else {
+            binding.tvListObatKosong.visibility = View.GONE
         }
     }
 
