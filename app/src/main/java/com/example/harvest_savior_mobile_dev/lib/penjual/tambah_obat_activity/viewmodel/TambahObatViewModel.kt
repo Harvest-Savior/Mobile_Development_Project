@@ -10,6 +10,7 @@ import com.example.harvest_savior_mobile_dev.repository.MedicineStoreRepository
 import com.example.harvest_savior_mobile_dev.util.LoginStorePreference
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class TambahObatViewModel(private val medicineStoreRepository: MedicineStoreRepository, private val pref : LoginStorePreference):ViewModel() {
 
@@ -19,7 +20,7 @@ class TambahObatViewModel(private val medicineStoreRepository: MedicineStoreRepo
     private val _loading = MutableLiveData<Boolean>()
     val loading : LiveData<Boolean> = _loading
 
-    fun addObat(tokenP:String, nama : String, desk : String, stok:Int, harga:Int, photo:MultipartBody.Part?) {
+    fun addObat(tokenP:String, nama : RequestBody?, desk : RequestBody?, stok:RequestBody?, harga:RequestBody?, photo:MultipartBody.Part?) {
         _loading.value = true
         viewModelScope.launch {
             try {

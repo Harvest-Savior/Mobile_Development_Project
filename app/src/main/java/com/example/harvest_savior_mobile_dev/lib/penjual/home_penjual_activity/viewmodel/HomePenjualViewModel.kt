@@ -24,7 +24,7 @@ class HomePenjualViewModel(private val medicineStoreRepository: MedicineStoreRep
 
     fun getObat(tokenV : String?) {
         viewModelScope.launch {
-        _loading.value = true
+            _loading.value = true
             try {
                 val response = medicineStoreRepository.getObat(tokenV)
                 _getObatResult.postValue(Result.success(response))

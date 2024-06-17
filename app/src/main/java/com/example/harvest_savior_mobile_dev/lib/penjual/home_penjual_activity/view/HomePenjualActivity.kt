@@ -51,7 +51,7 @@ class HomePenjualActivity : AppCompatActivity() {
 
         recyclerView = binding.rvProdukObat
         recyclerView.layoutManager = LinearLayoutManager(this)
-        produkObatAdapter = ProdukObatPenjualAdapter(emptyList(), this)
+        produkObatAdapter = ProdukObatPenjualAdapter(emptyList(), this,token2)
         recyclerView.adapter = produkObatAdapter
 
         pref = LoginStorePreference.getInstance(application.datastoreStore)
@@ -95,7 +95,7 @@ class HomePenjualActivity : AppCompatActivity() {
     }
 
     private fun setListData(data: List<DataItemGetObat?>) {
-        val adapter = ProdukObatPenjualAdapter(data,this)
+        val adapter = ProdukObatPenjualAdapter(data,this,token2)
         binding.rvProdukObat.adapter = adapter
 
         if (data.isEmpty()) {

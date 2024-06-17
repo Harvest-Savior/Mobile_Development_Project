@@ -50,7 +50,7 @@ class TambahObatActivity : AppCompatActivity() {
     private lateinit var pref : LoginStorePreference
     private lateinit var medicineStoreRepository: MedicineStoreRepository
 
-    private var token2 : String? = null
+    private var tokenInAdd : String? = null
     private var namToko : String? = null
     private var emailToko : String? = null
 
@@ -85,23 +85,39 @@ class TambahObatActivity : AppCompatActivity() {
 
         val tambahViewModelFactory = LoginStoreVMFactory(medicineStoreRepository,pref)
         viewModel = ViewModelProvider(this, tambahViewModelFactory).get(TambahObatViewModel::class.java)
-        token2 = intent.getStringExtra("token")
+        tokenInAdd= intent.getStringExtra("token")
         namToko = intent.getStringExtra("namaToko")
         emailToko = intent.getStringExtra("email")
 
-        binding.ivProduk.setImageURI(image)
+//        binding.ivProduk.setImageURI(image)
+
+        viewModel.addObatResult.observe(this) {
+            it.onSuccess {response ->
+                response.data.let {
+                    val intent = Intent(this, HomePenjualActivity::class.java)
+                    intent.putExtra("token", tokenInAdd)
+                    intent.putExtra("namaToko",namToko)
+                    intent.putExtra("email",emailToko)
+                    AnimationUtil.startActivityWithSlideAnimation(this, intent)
+                    finish()
+                    Toast.makeText(this,"Berhasil menambahkan obat anda", Toast.LENGTH_SHORT).show()
+                    binding.btnTambahObat.isEnabled = false
+                }
+            }.onFailure {
+                Toast.makeText(this,"Gagal menambahkan obat anda", Toast.LENGTH_SHORT).show()
+                binding.btnTambahObat.isEnabled = true
+            }
+        }
 
         binding.btnTambahObat.setOnClickListener {
-            lifecycleScope.launch {
-
-            }
+                addStory()
         }
         binding.btnChangeImage.setOnClickListener { startCamera() }
         binding.btnOpenGallery.setOnClickListener { startGallery() }
         binding.ivProduk.setOnClickListener { startCamera() }
     }
 
-    private  suspend fun addStory() {
+    private  fun addStory() {
         val namaObatText = binding.etNamaObatAdd.text.toString()
         val namaObat = namaObatText.toString().toRequestBody("text/plain".toMediaType())
 
@@ -131,22 +147,8 @@ class TambahObatActivity : AppCompatActivity() {
             compressedPhotoFile.name,
             requestImageFile
         )
-        try {
+            viewModel.addObat("Bearer $tokenInAdd",namaObat,description,stok,harga,imageMultipart)
 
-
-            viewModel.addObat("Bearer $token2",namaObatText,descriptionText,stokText.toInt(),hargaText.toInt(),imageMultipart)
-
-            binding.btnTambahObat.isEnabled = false
-
-            val intent = Intent(this, HomePenjualActivity::class.java)
-            token2 = intent.getStringExtra("token")
-            namToko = intent.getStringExtra("namaToko")
-            emailToko = intent.getStringExtra("email")
-            AnimationUtil.startActivityWithSlideAnimation(this, intent)
-            finish()
-        } catch (e : Exception) {
-            binding.btnTambahObat.isEnabled = true
-        }
     }
 
     private fun convertImageViewToFile(imageView: ImageView, fileName: String): File {
@@ -211,5 +213,6 @@ class TambahObatActivity : AppCompatActivity() {
 
     companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
+        private const val TAG = "TambahObatActivity"
     }
 }

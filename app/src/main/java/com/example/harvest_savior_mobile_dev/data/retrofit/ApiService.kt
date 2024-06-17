@@ -60,10 +60,10 @@ interface ApiService {
     @POST("medicines")
     suspend fun addObat (
         @Header("Authorization") token: String,
-        @Part("namaObat") namaObat : String,
-        @Part("deskripsi") deskripsi : String,
-        @Part("stok") stok : Int,
-        @Part("harga") harga : Int,
+        @Part("namaObat") namaObat : RequestBody?,
+        @Part("deskripsi") deskripsi : RequestBody?,
+        @Part("stok") stok : RequestBody?,
+        @Part("harga") harga : RequestBody?,
         @Part photo: MultipartBody.Part?
     ) : AddObatResponse
 
@@ -78,10 +78,13 @@ interface ApiService {
         @Path("id") idObat : String
     ) : HapusObatResponse
 
+    @FormUrlEncoded
     @PUT("updateMedicines/{id}")
     suspend fun editObat (
         @Header("Authorization") token: String,
-        @Part("id") idObat: String
+        @Path("id") idObat: String,
+        @Field("deskripsi") deskripsi : String?,
+
     ) : EditObatResponse
 
 }

@@ -43,6 +43,32 @@
             app:layout_constraintEnd_toEndOf="parent"
             />
 
+        <Button
+            android:id="@+id/btnChangeImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ubah_gambar"
+            android:fontFamily="@font/abelregular"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/iv_produk"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnOpenGallery"
+            android:layout_marginTop="10dp"
+            />
+
+        <Button
+            android:id="@+id/btnOpenGallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/buka_galeri"
+            android:fontFamily="@font/abelregular"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/iv_produk"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnChangeImage"
+            android:layout_marginTop="10dp"
+            />
+
         <TextView
             android:id="@+id/tv_namaObat"
             android:layout_width="wrap_content"
@@ -52,7 +78,7 @@
             android:textColor="@color/gray700"
             android:fontFamily="@font/abelregular"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/iv_produk"
+            app:layout_constraintTop_toBottomOf="@id/btnOpenGallery"
             app:layout_constraintStart_toStartOf="parent"
             />
 
@@ -198,7 +224,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btn_tambah"
+            android:id="@+id/btn_simpan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/tl_hargaObat"

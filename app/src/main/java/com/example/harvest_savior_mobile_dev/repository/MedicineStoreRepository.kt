@@ -13,6 +13,7 @@ import com.example.harvest_savior_mobile_dev.util.LoginStorePreference
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class MedicineStoreRepository(private val apiService: ApiService, private val preference: LoginStorePreference ) {
     suspend fun login(email: String, password : String) : LoginStoreResponse {
@@ -27,7 +28,7 @@ class MedicineStoreRepository(private val apiService: ApiService, private val pr
         return apiService.getObat("Bearer $tokenP")
     }
 
-    suspend fun addObat(tokenP: String, nama : String, deskripsi : String, stok:Int, harga : Int, photo : MultipartBody.Part?) : AddObatResponse {
+    suspend fun addObat(tokenP: String, nama : RequestBody?, deskripsi : RequestBody?, stok:RequestBody?, harga : RequestBody?, photo : MultipartBody.Part?) : AddObatResponse {
         return apiService.addObat("Bearer $tokenP",nama,deskripsi,stok,harga,photo)
 
     }
@@ -36,8 +37,8 @@ class MedicineStoreRepository(private val apiService: ApiService, private val pr
         return apiService.deleteObat(tokenP,idObat)
     }
 
-    suspend fun editObat(tokenP: String, idObat: String) : EditObatResponse {
-        return apiService.editObat(tokenP,idObat)
+    suspend fun editObat(tokenP: String, idObat: String,desk:String?) : EditObatResponse {
+        return apiService.editObat("Bearer $tokenP",idObat,desk)
     }
 
 }

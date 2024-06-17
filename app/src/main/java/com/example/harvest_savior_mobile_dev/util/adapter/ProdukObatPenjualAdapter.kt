@@ -15,9 +15,13 @@ import com.example.harvest_savior_mobile_dev.data.response.DataItemGetObat
 import com.example.harvest_savior_mobile_dev.data.response.Obat
 import com.example.harvest_savior_mobile_dev.lib.penjual.edit_obat_activity.view.EditObatActivity
 import com.example.harvest_savior_mobile_dev.lib.petani.detail_obat_activity.view.DetailObatActivity
+import com.example.harvest_savior_mobile_dev.util.LoginStorePreference
 import com.google.android.material.card.MaterialCardView
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 
-class ProdukObatPenjualAdapter(private val obat: List<DataItemGetObat?>, private val context: Context) : RecyclerView.Adapter<ProdukObatPenjualAdapter.ProdukObatViewHolder>() {
+class ProdukObatPenjualAdapter(private val obat: List<DataItemGetObat?>, private val context: Context, private val token : String?) : RecyclerView.Adapter<ProdukObatPenjualAdapter.ProdukObatViewHolder>() {
+
     inner class ProdukObatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTitle: TextView = itemView.findViewById(R.id.tv_nama_obat)
         val tvDescription: TextView = itemView.findViewById(R.id.tv_deskripsi_obat)
@@ -28,13 +32,21 @@ class ProdukObatPenjualAdapter(private val obat: List<DataItemGetObat?>, private
 
         fun bind(obat: DataItemGetObat) {
             Glide.with(context).load(obat.gambar).fitCenter().into(ivContent)
+            val id = obat.id.toString()
+            val harga = obat.harga.toString()
             tvTitle.text = obat.namaObat
             tvDescription.text = obat.deskripsi
             tvStok.text = obat.harga.toString()
 
+
             btnUbah.setOnClickListener {
                 val intent = Intent(context, EditObatActivity::class.java).apply {
+                    putExtra(TAG_ID_OBAT, id)
+                    putExtra("token",token)
                     putExtra(TAG_NAMA_OBAT, tvTitle.text.toString())
+                    putExtra(TAG_DESC, tvDescription.text.toString())
+                    putExtra(TAG_STOK, tvStok.text.toString())
+                    putExtra(TAG_HARGA, harga)
                 }
 
                 itemView.context.startActivity(intent)
@@ -64,6 +76,7 @@ class ProdukObatPenjualAdapter(private val obat: List<DataItemGetObat?>, private
     }
 
     companion object {
+        private const val TAG_ID_OBAT = "idObat"
         private const val TAG_NAMA_OBAT = "namaObat"
         private const val TAG_PHOTO_OBAT = "photoObat"
         private const val TAG_DESC = "deskripsiObat"
