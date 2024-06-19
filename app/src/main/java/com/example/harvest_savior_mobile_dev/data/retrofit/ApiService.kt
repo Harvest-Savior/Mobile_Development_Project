@@ -52,7 +52,7 @@ interface ApiService {
     ) : RegisterStoreResponse
 
     @FormUrlEncoded
-    @POST("login/medicine-store")
+    @POST("login/store")
     suspend fun postLoginStore(
         @Field("email") email : String,
         @Field("password") password: String
@@ -74,7 +74,7 @@ interface ApiService {
         @Header("Authorization") token: String
     ) : GetObatResponse
 
-    @DELETE("delmedicines/{id}")
+    @DELETE("delMedicines/{id}")
     suspend fun deleteObat(
         @Header("Authorization") token: String,
         @Path("id") idObat : String

@@ -93,8 +93,13 @@ class DaftarPenjualActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, daftarViewModelFactory).get(DaftarPenjualViewModel::class.java)
 
         binding.btnRegisterPenjual.setOnClickListener {
-
+            regiterStore()
         }
+        binding.ivProfilStore.setOnClickListener {
+            startCamera()
+        }
+        binding.btnChangeImage.setOnClickListener { startCamera() }
+        binding.btnOpenGallery.setOnClickListener { startGallery() }
 
         viewModel.loading.observe(this) {
             showLoading(it)
@@ -107,7 +112,8 @@ class DaftarPenjualActivity : AppCompatActivity() {
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()
-            }.onFailure {
+            }.onFailure {e ->
+                Log.d(TAG,"gagal register : $e")
                 Toast.makeText(this, "Gagal", Toast.LENGTH_SHORT).show()
             }
         }
@@ -145,12 +151,21 @@ class DaftarPenjualActivity : AppCompatActivity() {
             requestImageFile!!
         )
 
-        if (namaTokoText.isNotEmpty() && alamatText.isNotEmpty() && emailText.isNotEmpty() && noHpText.isNotEmpty() && passText.isNotEmpty() && confirmPassText.isNotEmpty() && isImageViewEmpty(photo)) {
+        if (isImageViewEmpty(photo)) {
+            Snackbar.make(
+                window.decorView.rootView,
+                "Foto profil harus diisi",
+                Snackbar.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        if (namaTokoText.isNotEmpty() && alamatText.isNotEmpty() && emailText.isNotEmpty() && noHpText.isNotEmpty() && passText.isNotEmpty() && confirmPassText.isNotEmpty() ) {
             if (isValidEmail(emailText)) {
                 binding.etEmail.error = null
                 if (passText.length >= 8) {
                     binding.etEmail.error = null
-                    if (pass == confirmPass ) {
+                    if (passText == confirmPassText ) {
                         binding.etConfirmPwPenjual.error = null
                         viewModel.registerStore(namaToko,email,alamat,noHp,pass,confirmPass,imageMultipart)
                     } else {

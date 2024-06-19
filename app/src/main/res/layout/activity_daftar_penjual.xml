@@ -55,7 +55,7 @@
             android:layout_height="180dp"
             android:layout_marginTop="30dp"
             android:src="@drawable/scan2"
-            android:padding="60dp"
+            android:padding="30dp"
             android:background="@drawable/rounded_profile_iv"
             app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
             app:layout_constraintStart_toStartOf="parent"
@@ -265,6 +265,8 @@
             app:boxCornerRadiusBottomEnd="20dp"
             app:startIconDrawable="@drawable/lock_1"
             app:placeholderText="@string/hint_pw"
+            app:passwordToggleDrawable="@drawable/show"
+            app:passwordToggleEnabled="true"
             app:placeholderTextAppearance="@style/PlaceholderStyle"
             app:layout_constraintEnd_toEndOf="parent">
             <com.google.android.material.textfield.TextInputEditText
@@ -303,6 +305,8 @@
             app:boxCornerRadiusBottomEnd="20dp"
             app:startIconDrawable="@drawable/lock_1"
             app:placeholderText="@string/hint_pw"
+            app:passwordToggleDrawable="@drawable/show"
+            app:passwordToggleEnabled="true"
             app:placeholderTextAppearance="@style/PlaceholderStyle"
             app:layout_constraintEnd_toEndOf="parent">
             <com.google.android.material.textfield.TextInputEditText
@@ -310,6 +314,7 @@
                 android:layout_width="match_parent"
                 android:inputType="textPassword"
                 android:hint="@string/konfirmasi_password"
+
                 android:textColor="@color/gray500"
                 android:fontFamily="@font/interregular"
                 android:textSize="18sp"

@@ -19,9 +19,15 @@ data class DataLoginStore(
 	@field:SerializedName("namaToko")
 	val namaToko: String? = null,
 
+	@field:SerializedName("noHp")
+	val noHp: String? = null,
+
+	@field:SerializedName("accessToken")
+	val accessToken: String? = null,
+
 	@field:SerializedName("email")
 	val email: String? = null,
 
-	@field:SerializedName("token")
-	val token: String? = null
+	@field:SerializedName("alamat")
+	val alamat: String? = null
 )

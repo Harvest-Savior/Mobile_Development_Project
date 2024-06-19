@@ -74,7 +74,7 @@ class LoginPenjualActivity : AppCompatActivity() {
             it.onSuccess { response ->
                 response.data?.let { data ->
                     val intent = Intent(this, HomePenjualActivity::class.java).apply {
-                        putExtra("token", data.token)
+                        putExtra("token", data.accessToken)
                         putExtra("namaToko", data.namaToko)
                         putExtra("email", data.email)
                     }
@@ -92,7 +92,7 @@ class LoginPenjualActivity : AppCompatActivity() {
         viewModel.getLoginSession().observe(this) { isLoged : LoginStoreResponse? ->
             if (isLoged != null){
                 val intent = Intent(this, HomePenjualActivity::class.java).apply {
-                    putExtra("token", isLoged.data?.token)
+                    putExtra("token", isLoged.data?.accessToken)
                     putExtra("namaToko", isLoged.data?.namaToko)
                     putExtra("email", isLoged.data?.email)
                 }
