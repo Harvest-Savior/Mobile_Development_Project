@@ -23,6 +23,10 @@ class MedicineStoreRepository(private val apiService: ApiService, private val pr
         return apiService.postLoginStore(email,password)
     }
 
+    suspend fun loginJspn(requestBody: RequestBody): LoginStoreResponse {
+        return apiService.postLoginStoreJson(requestBody)
+    }
+
     suspend fun register(namaToko : RequestBody,email: RequestBody, alamat : RequestBody,  noHp : RequestBody, password: RequestBody,confP : RequestBody, photo : MultipartBody.Part ) : RegisterStoreResponse {
         return apiService.postRegisterStore(namaToko,email,alamat,noHp,password, confP,photo)
     }

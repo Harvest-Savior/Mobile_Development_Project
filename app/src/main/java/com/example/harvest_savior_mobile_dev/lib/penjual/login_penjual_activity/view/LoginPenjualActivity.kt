@@ -16,6 +16,7 @@ import com.example.harvest_savior_mobile_dev.databinding.ActivityLoginPetaniBind
 import com.example.harvest_savior_mobile_dev.lib.ViewModelFactory.penjual.LoginStoreVMFactory
 import com.example.harvest_savior_mobile_dev.lib.penjual.daftar_penjual_activity.view.DaftarPenjualActivity
 import com.example.harvest_savior_mobile_dev.lib.penjual.home_penjual_activity.view.HomePenjualActivity
+import com.example.harvest_savior_mobile_dev.lib.penjual.login_penjual_activity.viewmodel.LoginJsonPenjualVM
 import com.example.harvest_savior_mobile_dev.lib.penjual.login_penjual_activity.viewmodel.LoginPenjualViewModel
 import com.example.harvest_savior_mobile_dev.lib.petani.login_petani_activity.view.LoginPetaniActivity
 import com.example.harvest_savior_mobile_dev.repository.MedicineStoreRepository
@@ -29,6 +30,7 @@ class LoginPenjualActivity : AppCompatActivity() {
     private var _binding: ActivityLoginPenjualBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: LoginPenjualViewModel
+    private lateinit var viewModel2: LoginJsonPenjualVM
     private lateinit var medicineStoreRepository: MedicineStoreRepository
     private lateinit var pref : LoginStorePreference
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +48,7 @@ class LoginPenjualActivity : AppCompatActivity() {
         medicineStoreRepository = MedicineStoreRepository(apiService,pref)
 
         val loginViewModelFactory = LoginStoreVMFactory(medicineStoreRepository,pref)
-        viewModel = ViewModelProvider(this, loginViewModelFactory).get(LoginPenjualViewModel::class.java)
+        viewModel2 = ViewModelProvider(this, loginViewModelFactory).get(LoginJsonPenjualVM::class.java)
 
 
 
@@ -56,7 +58,7 @@ class LoginPenjualActivity : AppCompatActivity() {
 
             if (inputEmail.isNotEmpty() && inputPass.isNotEmpty()) {
                 if (isValidEmail(inputEmail)) {
-                    viewModel.login(inputEmail,inputPass)
+                    viewModel2.login(inputEmail,inputPass)
                 } else {
                     binding.etEmailPenjual.error = "Input email tidak valid"
                 }
@@ -70,7 +72,7 @@ class LoginPenjualActivity : AppCompatActivity() {
             AnimationUtil.startActivityWithSlideAnimation(this, intent)
         }
 
-        viewModel.loginResult.observe(this) {
+        viewModel2.loginResult.observe(this) {
             it.onSuccess { response ->
                 response.data?.let { data ->
                     val intent = Intent(this, HomePenjualActivity::class.java).apply {
@@ -81,7 +83,7 @@ class LoginPenjualActivity : AppCompatActivity() {
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     AnimationUtil.startActivityWithSlideAnimation(this, intent)
                     finish()
-                    viewModel.saveLoginSession(response)
+                    viewModel2.saveLoginSession(response)
                     Snackbar.make(window.decorView.rootView, "Berhasil Login", Snackbar.LENGTH_SHORT).show()
                 }
             }.onFailure {
@@ -89,7 +91,7 @@ class LoginPenjualActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.getLoginSession().observe(this) { isLoged : LoginStoreResponse? ->
+        viewModel2.getLoginSession().observe(this) { isLoged : LoginStoreResponse? ->
             if (isLoged != null){
                 val intent = Intent(this, HomePenjualActivity::class.java).apply {
                     putExtra("token", isLoged.data?.accessToken)
@@ -101,7 +103,7 @@ class LoginPenjualActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.loading.observe(this) {
+        viewModel2.loading.observe(this) {
             showLoading(it)
         }
     }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.harvest_savior_mobile_dev.lib.penjual.edit_obat_activity.viewmodel.EditObatViewModel
 import com.example.harvest_savior_mobile_dev.lib.penjual.home_penjual_activity.viewmodel.HomePenjualViewModel
+import com.example.harvest_savior_mobile_dev.lib.penjual.login_penjual_activity.viewmodel.LoginJsonPenjualVM
 import com.example.harvest_savior_mobile_dev.lib.penjual.login_penjual_activity.viewmodel.LoginPenjualViewModel
 import com.example.harvest_savior_mobile_dev.lib.penjual.setting_activity.viewModel.SettingPenjualViewModel
 import com.example.harvest_savior_mobile_dev.lib.penjual.tambah_obat_activity.viewmodel.TambahObatViewModel
@@ -28,7 +29,8 @@ class LoginStoreVMFactory(private val medicineStoreRepository: MedicineStoreRepo
 
         } else if (modelClass.isAssignableFrom(EditObatViewModel::class.java)) {
             return EditObatViewModel(medicineStoreRepository,loginStorePreference) as T
-
+        }else if(modelClass.isAssignableFrom(LoginJsonPenjualVM::class.java)) {
+            return LoginJsonPenjualVM(medicineStoreRepository,loginStorePreference) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class : ${modelClass.name}")
     }

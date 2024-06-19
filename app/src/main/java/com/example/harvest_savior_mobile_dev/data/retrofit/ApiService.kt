@@ -11,6 +11,7 @@ import com.example.harvest_savior_mobile_dev.data.response.RegisterStoreResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -57,6 +58,11 @@ interface ApiService {
         @Field("email") email : String,
         @Field("password") password: String
     ) : LoginStoreResponse
+
+    @POST("login/store")
+    suspend fun postLoginStoreJson(
+        @Body requestBody: RequestBody
+    ): LoginStoreResponse
 
     @Multipart
     @POST("medicines")
