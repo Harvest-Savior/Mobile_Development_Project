@@ -8,6 +8,8 @@ import com.example.harvest_savior_mobile_dev.data.response.EditObatResponse
 import com.example.harvest_savior_mobile_dev.repository.MedicineStoreRepository
 import com.example.harvest_savior_mobile_dev.util.LoginStorePreference
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class EditObatViewModel(private val medicineStoreRepository: MedicineStoreRepository, private val pref : LoginStorePreference): ViewModel() {
     private val _editObatResult = MutableLiveData<Result<EditObatResponse>>()
@@ -16,11 +18,11 @@ class EditObatViewModel(private val medicineStoreRepository: MedicineStoreReposi
     private val _loading = MutableLiveData<Boolean>()
     val loading : LiveData<Boolean> = _loading
 
-    fun editObat(tokenP : String, idObat : String,desk:String?) {
+    fun editObat(tokenP : String, idObat : String,desk:RequestBody?,nama:RequestBody?,stok:Int?,harga:Int?,photo: RequestBody?) {
         _loading.value = true
         viewModelScope.launch {
             try {
-                val response = medicineStoreRepository.editObat(tokenP,idObat,desk)
+                val response = medicineStoreRepository.editObat(tokenP,idObat,desk,nama,stok,harga,photo)
                 _editObatResult.postValue(Result.success(response))
 
             } catch (e : Exception) {

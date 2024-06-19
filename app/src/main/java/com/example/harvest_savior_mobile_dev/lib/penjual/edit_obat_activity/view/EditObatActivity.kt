@@ -5,7 +5,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.VectorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -30,6 +32,13 @@ import com.example.harvest_savior_mobile_dev.util.LoginStorePreference
 import com.example.harvest_savior_mobile_dev.util.createCustomTempFile
 import com.example.harvest_savior_mobile_dev.util.datastoreStore
 import com.example.harvest_savior_mobile_dev.util.getImageUri
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.io.FileOutputStream
 
@@ -86,9 +95,16 @@ class EditObatActivity : AppCompatActivity() {
         token2 = intent.getStringExtra("token")
         namToko = intent.getStringExtra("namaToko")
         emailToko = intent.getStringExtra("email")
-        idObat = intent.getStringExtra("idObat")
+        idObat = intent.getStringExtra(TAG_ID_OBAT)
+        descObat = intent.getStringExtra(TAG_DESC)
+        namaObat = intent.getStringExtra(TAG_NAMA_OBAT)
+        hargaObat = intent.getIntExtra(TAG_HARGA,0)
+        stokObat = intent.getIntExtra(TAG_STOK,0)
+
         Log.d(TAG,"idObat : $idObat")
         Log.d(TAG,"token : $token2")
+        Log.d(TAG,"stok : $stokObat")
+        Log.d(TAG,"harga : $hargaObat")
 
 
 
@@ -113,26 +129,82 @@ class EditObatActivity : AppCompatActivity() {
         }
 
         binding.btnSimpan.setOnClickListener {
-            val desk = binding.etDeskripsiObat.text.toString()
-            viewModel.editObat(token2!!,idObat!!, desk)
+            addStory()
         }
 
         binding.btnChangeImage.setOnClickListener { startCamera() }
         binding.btnOpenGallery.setOnClickListener { startGallery() }
         binding.ivProduk.setOnClickListener { startCamera() }
 
+        binding.etNamaObat.setText(namaObat)
+        binding.etDeskripsiObat.setText(descObat)
+        binding.etStok.setText(stokObat.toString())
+        binding.etHargaObat.setText(hargaObat.toString())
 
     }
 
-    private fun convertImageViewToFile(imageView: ImageView, fileName: String): File {
-        val bitmap = (imageView.drawable as BitmapDrawable).bitmap
+    private  fun addStory() {
+        val deskIn = binding.etDeskripsiObat.text.toString().toRequestBody("text/plain".toMediaType())
+        val namaIn = binding.etNamaObat.text.toString().toRequestBody("text/plain".toMediaType())
+        val stokIn = binding.etStok.text.toString().toIntOrNull()
+        val hargaIn = binding.etHargaObat.text.toString().toIntOrNull()
+
+        val img = binding.ivProduk
+        val photoFile2 = convertImageViewToFile(img, "photo.jpg")
+        val photoRequestBody = fileToRequestBody(photoFile2)
+
+        if (photoFile2 == null) {
+
+            viewModel.editObat(token2!!, idObat!!, deskIn, namaIn, stokIn, hargaIn, null)
+        } else {
+            val compressedPhotoFile = compressImageFile(photoFile2)
+            val photoUri = Uri.fromFile(compressedPhotoFile)
+            viewModel.editObat(token2!!, idObat!!, deskIn, namaIn, stokIn, hargaIn, photoRequestBody)
+        }
+    }
+
+    private fun fileToRequestBody(file: File?): RequestBody? {
+        return if (file != null) {
+            RequestBody.create("image/*".toMediaTypeOrNull(), file)
+        } else {
+            null
+        }
+    }
+
+
+
+    private fun convertImageViewToFile(imageView: ImageView, fileName: String): File? {
+        val drawable = imageView.drawable
+        val bitmap: Bitmap?
+
+        when (drawable) {
+            is BitmapDrawable -> {
+                bitmap = drawable.bitmap
+            }
+            is VectorDrawable -> {
+                bitmap = Bitmap.createBitmap(
+                    drawable.intrinsicWidth,
+                    drawable.intrinsicHeight,
+                    Bitmap.Config.ARGB_8888
+                )
+                val canvas = Canvas(bitmap)
+                drawable.setBounds(0, 0, canvas.width, canvas.height)
+                drawable.draw(canvas)
+            }
+            else -> {
+                Log.e(TAG, "Tipe drawable tidak didukung: ${drawable.javaClass.simpleName}")
+                return null
+            }
+        }
+
         val file = File(cacheDir, fileName)
         val fileOutputStream = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
         fileOutputStream.flush()
         fileOutputStream.close()
         return file
     }
+
 
     private fun compressImageFile(file: File): File {
         val bitmap = BitmapFactory.decodeFile(file.path)
@@ -187,5 +259,12 @@ class EditObatActivity : AppCompatActivity() {
     companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
         private const val TAG = "EditObatActivity"
+
+        private const val TAG_ID_OBAT = "idObat"
+        private const val TAG_NAMA_OBAT = "namaObat"
+        private const val TAG_PHOTO_OBAT = "photoObat"
+        private const val TAG_DESC = "deskripsiObat"
+        private const val TAG_STOK = "stokObat"
+        private const val TAG_HARGA = "hargaObat"
     }
 }

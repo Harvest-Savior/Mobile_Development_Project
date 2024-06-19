@@ -5,11 +5,16 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.VectorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
@@ -19,9 +24,11 @@ import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.harvest_savior_mobile_dev.R
+import com.example.harvest_savior_mobile_dev.data.response.ListPenyakitObat
 import com.example.harvest_savior_mobile_dev.data.retrofit.ApiConfig
 import com.example.harvest_savior_mobile_dev.databinding.ActivityTambahObatBinding
 import com.example.harvest_savior_mobile_dev.lib.ViewModelFactory.penjual.LoginStoreVMFactory
+import com.example.harvest_savior_mobile_dev.lib.penjual.edit_obat_activity.view.EditObatActivity
 import com.example.harvest_savior_mobile_dev.lib.penjual.home_penjual_activity.view.HomePenjualActivity
 import com.example.harvest_savior_mobile_dev.lib.penjual.tambah_obat_activity.viewmodel.TambahObatViewModel
 import com.example.harvest_savior_mobile_dev.lib.petani.camera_activity.view.CameraPetaniActivity.Companion.CAMERAX_RESULT
@@ -35,6 +42,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
@@ -88,8 +96,24 @@ class TambahObatActivity : AppCompatActivity() {
         tokenInAdd= intent.getStringExtra("token")
         namToko = intent.getStringExtra("namaToko")
         emailToko = intent.getStringExtra("email")
+        Log.d(TAG,"token pada add: $tokenInAdd")
 
-//        binding.ivProduk.setImageURI(image)
+        val adapterSpinner = ArrayAdapter(this, android.R.layout.simple_spinner_item, ListPenyakitObat.penyakitList)
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerPenyakit.adapter = adapterSpinner
+
+        binding.spinnerPenyakit.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val selectedPenyakit = p0?.getItemAtPosition(p2).toString()
+                binding.tvSelectedPenyakit.text = selectedPenyakit
+                binding.cardSelectedPenyakit.visibility = View.VISIBLE
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
 
         viewModel.addObatResult.observe(this) {
             it.onSuccess {response ->
@@ -100,10 +124,12 @@ class TambahObatActivity : AppCompatActivity() {
                     intent.putExtra("email",emailToko)
                     AnimationUtil.startActivityWithSlideAnimation(this, intent)
                     finish()
+
                     Toast.makeText(this,"Berhasil menambahkan obat anda", Toast.LENGTH_SHORT).show()
                     binding.btnTambahObat.isEnabled = false
                 }
-            }.onFailure {
+            }.onFailure {e ->
+                Log.d(TAG,"onfailure : $e")
                 Toast.makeText(this,"Gagal menambahkan obat anda", Toast.LENGTH_SHORT).show()
                 binding.btnTambahObat.isEnabled = true
             }
@@ -132,34 +158,62 @@ class TambahObatActivity : AppCompatActivity() {
 
         val img = binding.ivProduk
 
-        val photoFile2 = convertImageViewToFile(img, "photo.jpg")
-        if (descriptionText.isEmpty()) {
-            Toast.makeText(this, "Description cannot be empty", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val compressedPhotoFile = compressImageFile(photoFile2)
-        val photoUri = Uri.fromFile(compressedPhotoFile)
-
-        val requestImageFile = compressedPhotoFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
+        val photoFile2 = convertImageViewToFile(img, "gambar.jpeg")
+        val compressedPhotoFile = photoFile2?.let { compressImageFile(it) }
+        val requestImageFile = compressedPhotoFile?.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-            "photo",
-            compressedPhotoFile.name,
-            requestImageFile
+            "gambar",
+            compressedPhotoFile?.name,
+            requestImageFile!!
         )
-            viewModel.addObat("Bearer $tokenInAdd",namaObat,description,stok,harga,imageMultipart)
+
+        Log.d("TambahObatActivity", "addStory called with: namaObat = $namaObat, description = $description, stok = $stok, harga = $harga, photoRequestBody = $imageMultipart")
+        viewModel.addObat(tokenInAdd!!,namaObat,description,stok,harga,imageMultipart)
 
     }
 
-    private fun convertImageViewToFile(imageView: ImageView, fileName: String): File {
-        val bitmap = (imageView.drawable as BitmapDrawable).bitmap
+    private fun fileToRequestBody(file: File?): RequestBody? {
+        return if (file != null) {
+            RequestBody.create("image/*".toMediaTypeOrNull(), file)
+        } else {
+            null
+        }
+    }
+
+
+
+    private fun convertImageViewToFile(imageView: ImageView, fileName: String): File? {
+        val drawable = imageView.drawable
+        val bitmap: Bitmap?
+
+        when (drawable) {
+            is BitmapDrawable -> {
+                bitmap = drawable.bitmap
+            }
+            is VectorDrawable -> {
+                bitmap = Bitmap.createBitmap(
+                    drawable.intrinsicWidth,
+                    drawable.intrinsicHeight,
+                    Bitmap.Config.ARGB_8888
+                )
+                val canvas = Canvas(bitmap)
+                drawable.setBounds(0, 0, canvas.width, canvas.height)
+                drawable.draw(canvas)
+            }
+            else -> {
+                Log.e(TAG, "Tipe drawable tidak didukung: ${drawable.javaClass.simpleName}")
+                return null
+            }
+        }
+
         val file = File(cacheDir, fileName)
         val fileOutputStream = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
         fileOutputStream.flush()
         fileOutputStream.close()
         return file
     }
+
 
     private fun compressImageFile(file: File): File {
         val bitmap = BitmapFactory.decodeFile(file.path)

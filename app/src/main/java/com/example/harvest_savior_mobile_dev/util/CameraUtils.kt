@@ -28,7 +28,7 @@ fun getImageUri(context: Context): Uri {
     var uri: Uri? = null
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, "$timeStamp.jpg")
+            put(MediaStore.MediaColumns.DISPLAY_NAME, "$timeStamp.jpeg")
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
             put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/MyCamera/")
         }
@@ -42,7 +42,7 @@ fun getImageUri(context: Context): Uri {
 
 private fun getImageUriForPreQ(context: Context): Uri {
     val filesDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-    val imageFile = File(filesDir, "/MyCamera/$timeStamp.jpg")
+    val imageFile = File(filesDir, "/MyCamera/$timeStamp.jpeg")
     if (imageFile.parentFile?.exists() == false) imageFile.parentFile?.mkdir()
     return FileProvider.getUriForFile(
         context,
@@ -54,7 +54,7 @@ private fun getImageUriForPreQ(context: Context): Uri {
 
 fun createCustomTempFile(context: Context): File {
     val filesDir = context.externalCacheDir
-    return File.createTempFile(timeStamp, ".jpg", filesDir)
+    return File.createTempFile(timeStamp, ".jpeg", filesDir)
 }
 
 fun uriToFile(imageUri: Uri, context: Context): File {

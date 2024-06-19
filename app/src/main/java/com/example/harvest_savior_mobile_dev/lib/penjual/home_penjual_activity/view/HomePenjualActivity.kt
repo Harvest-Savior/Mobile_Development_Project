@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -51,8 +52,7 @@ class HomePenjualActivity : AppCompatActivity() {
 
         recyclerView = binding.rvProdukObat
         recyclerView.layoutManager = LinearLayoutManager(this)
-        produkObatAdapter = ProdukObatPenjualAdapter(emptyList(), this,token2)
-        recyclerView.adapter = produkObatAdapter
+
 
         pref = LoginStorePreference.getInstance(application.datastoreStore)
         val apiService = ApiConfig.getApiService()
@@ -76,6 +76,15 @@ class HomePenjualActivity : AppCompatActivity() {
 
         viewModel.getObat(token2)
 
+        viewModel.hapusObatResult.observe(this) { result ->
+            result.onSuccess {
+                Toast.makeText(this, "Obat berhasil dihapus", Toast.LENGTH_SHORT).show()
+                viewModel.getObat(token2)
+            }.onFailure { e ->
+                Toast.makeText(this, "Gagal menghapus obat: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         Log.d(TAG,"token : $token2")
         binding.tvWelcomeHomePetani.text = "Selamat Datang, $namToko"
 
@@ -95,8 +104,8 @@ class HomePenjualActivity : AppCompatActivity() {
     }
 
     private fun setListData(data: List<DataItemGetObat?>) {
-        val adapter = ProdukObatPenjualAdapter(data,this,token2)
-        binding.rvProdukObat.adapter = adapter
+        produkObatAdapter = ProdukObatPenjualAdapter(data.toMutableList(), this, token2, namToko, emailToko, viewModel)
+        binding.rvProdukObat.adapter = produkObatAdapter
 
         if (data.isEmpty()) {
             binding.tvListObatKosong.visibility = View.VISIBLE

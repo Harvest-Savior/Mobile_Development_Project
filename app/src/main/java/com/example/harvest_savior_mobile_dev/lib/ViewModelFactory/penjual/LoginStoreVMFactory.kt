@@ -16,14 +16,19 @@ class LoginStoreVMFactory(private val medicineStoreRepository: MedicineStoreRepo
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginPenjualViewModel::class.java)) {
             return LoginPenjualViewModel(medicineStoreRepository, loginStorePreference) as T
+
         } else if (modelClass.isAssignableFrom(HomePenjualViewModel::class.java)) {
             return HomePenjualViewModel(medicineStoreRepository,loginStorePreference) as T
+
         }else if (modelClass.isAssignableFrom(SettingPenjualViewModel::class.java)) {
             return SettingPenjualViewModel(medicineStoreRepository,loginStorePreference) as T
+
         } else if (modelClass.isAssignableFrom(TambahObatViewModel::class.java)) {
             return TambahObatViewModel(medicineStoreRepository, loginStorePreference) as T
+
         } else if (modelClass.isAssignableFrom(EditObatViewModel::class.java)) {
             return EditObatViewModel(medicineStoreRepository,loginStorePreference) as T
+
         }
         throw IllegalArgumentException("Unknown ViewModel class : ${modelClass.name}")
     }

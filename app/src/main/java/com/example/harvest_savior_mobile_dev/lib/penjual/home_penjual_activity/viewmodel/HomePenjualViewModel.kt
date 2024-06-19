@@ -42,10 +42,12 @@ class HomePenjualViewModel(private val medicineStoreRepository: MedicineStoreRep
             try {
                 val response = medicineStoreRepository.deteleObat(tokenP,idObat)
                 _hapusObatResult.postValue(Result.success(response))
-                _loading.value = false
+
             }catch (e:Exception) {
-                _loading.value = false
+
                 _hapusObatResult.postValue(Result.failure(e))
+            }finally {
+                _loading.value = false
             }
         }
     }

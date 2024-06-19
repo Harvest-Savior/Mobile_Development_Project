@@ -49,6 +49,7 @@ class SettingPenjualActivity : AppCompatActivity() {
 
     private fun navigateToLogin() {
         val intent = Intent(this, LoginPenjualActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         AnimationUtil.startActivityWithSlideAnimation(this, intent)
     }
 

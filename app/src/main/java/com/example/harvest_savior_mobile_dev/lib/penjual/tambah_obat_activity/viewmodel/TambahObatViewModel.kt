@@ -26,9 +26,11 @@ class TambahObatViewModel(private val medicineStoreRepository: MedicineStoreRepo
             try {
                 val response = medicineStoreRepository.addObat(tokenP,nama,desk,stok,harga,photo)
                 _addObatResult.postValue(Result.success(response))
-                _loading.value = false
+
             }catch (e : Exception) {
                 _addObatResult.postValue(Result.failure(e))
+
+            }finally {
                 _loading.value = false
             }
         }

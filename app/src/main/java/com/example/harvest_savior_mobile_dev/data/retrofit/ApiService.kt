@@ -78,13 +78,16 @@ interface ApiService {
         @Path("id") idObat : String
     ) : HapusObatResponse
 
-    @FormUrlEncoded
+    @Multipart
     @PUT("updateMedicines/{id}")
     suspend fun editObat (
         @Header("Authorization") token: String,
         @Path("id") idObat: String,
-        @Field("deskripsi") deskripsi : String?,
-
+        @Part("deskripsi") deskripsi : RequestBody?,
+        @Part("namaObat") namaObat : RequestBody?,
+        @Part("stok") stok : Int?,
+        @Part("harga") harga : Int?,
+        @Part("gambar") photo: RequestBody?
     ) : EditObatResponse
 
 }
