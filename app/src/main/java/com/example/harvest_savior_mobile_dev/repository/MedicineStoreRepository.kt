@@ -23,12 +23,12 @@ class MedicineStoreRepository(private val apiService: ApiService, private val pr
         return apiService.postLoginStore(email,password)
     }
 
-    suspend fun register(namaToko : String, alamat : String, email: String, noHp : Int, password: String ) : RegisterStoreResponse {
-        return apiService.postRegisterStore(namaToko,alamat,email,noHp,password)
+    suspend fun register(namaToko : RequestBody,email: RequestBody, alamat : RequestBody,  noHp : RequestBody, password: RequestBody,confP : RequestBody, photo : MultipartBody.Part ) : RegisterStoreResponse {
+        return apiService.postRegisterStore(namaToko,email,alamat,noHp,password, confP,photo)
     }
 
     suspend fun getObat(tokenP : String?) : GetObatResponse {
-        return apiService.getObat("Bearer $tokenP")
+        return apiService.getObat("RequestBodyrer $tokenP")
     }
 
     suspend fun addObat(

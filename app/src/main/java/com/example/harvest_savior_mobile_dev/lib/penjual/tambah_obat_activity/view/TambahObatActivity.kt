@@ -172,16 +172,6 @@ class TambahObatActivity : AppCompatActivity() {
 
     }
 
-    private fun fileToRequestBody(file: File?): RequestBody? {
-        return if (file != null) {
-            RequestBody.create("image/*".toMediaTypeOrNull(), file)
-        } else {
-            null
-        }
-    }
-
-
-
     private fun convertImageViewToFile(imageView: ImageView, fileName: String): File? {
         val drawable = imageView.drawable
         val bitmap: Bitmap?

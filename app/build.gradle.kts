@@ -16,7 +16,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        buildConfigField("String","BASE_URI","\"https://apiauthentication-2yxfend4ya-et.a.run.app/user/\"")
+        buildConfigField("String","BASE_URI","\"34.50.79.94:8080/\"")
+        buildConfigField("String","BASE_URI_NEW","\"https://apiauthentication-2yxfend4ya-et.a.run.app/user/\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

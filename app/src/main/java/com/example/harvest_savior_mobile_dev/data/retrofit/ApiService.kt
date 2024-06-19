@@ -39,14 +39,16 @@ interface ApiService {
         @Field("password") password: String
     ) : LoginFarmerResponse
 
-    @FormUrlEncoded
-    @POST("register/medicine-store")
+    @Multipart
+    @POST("register/store")
     suspend fun postRegisterStore(
-        @Field("namaToko") namaToko : String,
-        @Field("alamat") alamat : String,
-        @Field("email") email : String,
-        @Field("noHp") noHp : Int,
-        @Field("password") password : String
+        @Part("namaToko") namaToko : RequestBody,
+        @Part("email") email : RequestBody,
+        @Part("alamat") alamat : RequestBody,
+        @Part("noHp") noHp : RequestBody,
+        @Part("password") password : RequestBody,
+        @Part("confPassword") confPassword : RequestBody,
+        @Part photo : MultipartBody.Part?
     ) : RegisterStoreResponse
 
     @FormUrlEncoded
