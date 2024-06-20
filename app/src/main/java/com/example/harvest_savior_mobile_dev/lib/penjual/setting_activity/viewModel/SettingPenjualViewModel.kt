@@ -20,4 +20,8 @@ class SettingPenjualViewModel(private val medicineStoreRepository: MedicineStore
             loginStorePref.removeLoginSession()
         }
     }
+
+    fun getGambar(): LiveData<String?> {
+        return loginStorePref.getGambar().asLiveData()
+    }
 }

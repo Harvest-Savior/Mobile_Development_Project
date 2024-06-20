@@ -12,20 +12,22 @@
     android:layout_height="wrap_content"
     android:background="@color/green1"
     >
-    <TextView
-        android:id="@+id/tv_welcome_homePetani"
-        android:layout_width="wrap_content"
-        android:text="@string/tv_welcome_home_petani"
-        android:textSize="30sp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:fontFamily="@font/abelregular"
-        android:textColor="@color/white"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/tv_welcome_homePetani"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/abelregular"
+            android:text="@string/tv_welcome_home_petani"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@id/iv_profile_petani"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+        <TextView
         android:id="@+id/tv_subtitle_homePetani"
         android:layout_width="wrap_content"
         android:text="@string/manajemen_stok_obatmu_disini"
@@ -40,13 +42,14 @@
 
     <ImageView
         android:id="@+id/iv_profile_petani"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@color/white"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/profile_1"
+        android:background="@drawable/rounded_profile_iv"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_welcome_homePetani"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/tv_subtitle_homePetani"/>
 
     <com.google.android.material.card.MaterialCardView

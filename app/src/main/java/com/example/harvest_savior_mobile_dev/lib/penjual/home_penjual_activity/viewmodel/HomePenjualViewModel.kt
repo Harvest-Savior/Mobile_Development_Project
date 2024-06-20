@@ -3,14 +3,23 @@ package com.example.harvest_savior_mobile_dev.lib.penjual.home_penjual_activity.
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.harvest_savior_mobile_dev.data.response.GetObatResponse
 import com.example.harvest_savior_mobile_dev.data.response.HapusObatResponse
+import com.example.harvest_savior_mobile_dev.data.response.LoginFarmerResponse
+import com.example.harvest_savior_mobile_dev.data.response.LoginStoreRequest
 import com.example.harvest_savior_mobile_dev.data.response.LoginStoreResponse
 import com.example.harvest_savior_mobile_dev.lib.ViewModelFactory.penjual.LoginStoreVMFactory
 import com.example.harvest_savior_mobile_dev.repository.MedicineStoreRepository
 import com.example.harvest_savior_mobile_dev.util.LoginStorePreference
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 
 class HomePenjualViewModel(private val medicineStoreRepository: MedicineStoreRepository, private val loginStorePreference: LoginStorePreference): ViewModel() {
     private val _getObatResult = MutableLiveData<Result<GetObatResponse>>()
@@ -21,6 +30,12 @@ class HomePenjualViewModel(private val medicineStoreRepository: MedicineStoreRep
 
     private val _loading = MutableLiveData<Boolean>()
     val loading : LiveData<Boolean> = _loading
+
+    private val _profileImageUrl = MutableLiveData<String>()
+    val profileImageUrl: LiveData<String> = _profileImageUrl
+
+    private val _loginResult = MutableLiveData<Result<LoginStoreResponse>>()
+    val loginResult: LiveData<Result<LoginStoreResponse>> = _loginResult
 
     fun getObat(tokenV : String?) {
         viewModelScope.launch {
@@ -36,6 +51,7 @@ class HomePenjualViewModel(private val medicineStoreRepository: MedicineStoreRep
         }
     }
 
+
     fun deleteObat(tokenP : String, idObat:String) {
         _loading.value = true
         viewModelScope.launch{
@@ -50,6 +66,10 @@ class HomePenjualViewModel(private val medicineStoreRepository: MedicineStoreRep
                 _loading.value = false
             }
         }
+    }
+
+    fun getGambar(): LiveData<String?> {
+        return loginStorePreference.getGambar().asLiveData()
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.harvest_savior_mobile_dev.data.retrofit
 
 import com.example.harvest_savior_mobile_dev.data.response.AddObatResponse
 import com.example.harvest_savior_mobile_dev.data.response.EditObatResponse
+import com.example.harvest_savior_mobile_dev.data.response.GetLoginFarmerResponse
 import com.example.harvest_savior_mobile_dev.data.response.GetObatResponse
 import com.example.harvest_savior_mobile_dev.data.response.HapusObatResponse
 import com.example.harvest_savior_mobile_dev.data.response.LoginFarmerResponse
@@ -64,15 +65,27 @@ interface ApiService {
         @Body requestBody: RequestBody
     ): LoginStoreResponse
 
+    @POST("login/farmer")
+    suspend fun postLoginFarmerJson(
+        @Body requestBody: RequestBody
+    ): LoginFarmerResponse
+
+    @GET("users/farmer")
+    suspend fun getDataFarmer(
+        @Header("Authorization") token: String,
+    ) : GetLoginFarmerResponse
+
     @Multipart
-    @POST("medicines")
+    @POST("addMedicine")
     suspend fun addObat (
         @Header("Authorization") token: String,
         @Part("namaObat") namaObat : RequestBody?,
         @Part("deskripsi") deskripsi : RequestBody?,
-        @Part("stok") stok : RequestBody?,
         @Part("harga") harga : RequestBody?,
-        @Part photo: MultipartBody.Part?
+        @Part("stok") stok : RequestBody?,
+        @Part("penyakit") tipePenyakit : RequestBody?,
+        @Part photo: MultipartBody.Part?,
+        @Part("linkProduct") linkProduk : RequestBody?
     ) : AddObatResponse
 
     @GET("getMedicines")
@@ -91,11 +104,13 @@ interface ApiService {
     suspend fun editObat (
         @Header("Authorization") token: String,
         @Path("id") idObat: String,
-        @Part("deskripsi") deskripsi : RequestBody?,
         @Part("namaObat") namaObat : RequestBody?,
-        @Part("stok") stok : Int?,
-        @Part("harga") harga : Int?,
-        @Part("gambar") photo: RequestBody?
+        @Part("deskripsi") deskripsi : RequestBody?,
+        @Part("harga") harga : RequestBody?,
+        @Part("stok") stok : RequestBody?,
+        @Part("penyakit") tipePenyakit: RequestBody?,
+        @Part photo: MultipartBody.Part?,
+        @Part("linkProduct") linkProduk: RequestBody?
     ) : EditObatResponse
 
 }

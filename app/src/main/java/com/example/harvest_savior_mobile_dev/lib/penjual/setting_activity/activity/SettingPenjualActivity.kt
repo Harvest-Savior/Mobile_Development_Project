@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.harvest_savior_mobile_dev.R
 import com.example.harvest_savior_mobile_dev.data.retrofit.ApiConfig
 import com.example.harvest_savior_mobile_dev.databinding.ActivitySettingPenjualBinding
@@ -23,6 +24,9 @@ class SettingPenjualActivity : AppCompatActivity() {
 
     private lateinit var viewModel : SettingPenjualViewModel
     private lateinit var medicineStoreRepository: MedicineStoreRepository
+    private var namToko : String? = null
+    private var emailToko : String? = null
+    private var imgProfil : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivitySettingPenjualBinding.inflate(layoutInflater)
@@ -32,11 +36,30 @@ class SettingPenjualActivity : AppCompatActivity() {
         val pref = LoginStorePreference(application.datastoreStore)
         medicineStoreRepository = MedicineStoreRepository(apiService,pref)
 
+        namToko = intent.getStringExtra("namaToko")
+        emailToko = intent.getStringExtra("email")
+        imgProfil = intent.getStringExtra("gambar")
+
         viewModel = ViewModelProvider(this, LoginStoreVMFactory(medicineStoreRepository,pref)).get(SettingPenjualViewModel::class.java)
 
         binding.btnKeluarPenjual.setOnClickListener {
             viewModel.logout()
         }
+
+        if (!imgProfil.isNullOrEmpty()) {
+            loadProfileImage(imgProfil!!)
+        } else {
+            // Jika gambar dari intent null, coba ambil dari preference
+            viewModel.getGambar().observe(this) { gambarDariPreference ->
+                gambarDariPreference?.let {
+                    loadProfileImage(it)
+                }
+            }
+        }
+
+        binding.tvNamaToko.text = namToko
+        binding.tvEmailToko.text = emailToko
+
         viewModel.getLoginSession().observe(this) { token ->
             if (token == null) {
                 navigateToLogin()
@@ -51,6 +74,15 @@ class SettingPenjualActivity : AppCompatActivity() {
         val intent = Intent(this, LoginPenjualActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         AnimationUtil.startActivityWithSlideAnimation(this, intent)
+    }
+
+    private fun loadProfileImage(url: String) {
+        Glide.with(this)
+            .load(url)
+            .circleCrop()
+            .placeholder(R.drawable.profile_2)
+            .error(R.drawable.image_3_gray400)
+            .into(binding.ivProfilePetani)
     }
 
     companion object {

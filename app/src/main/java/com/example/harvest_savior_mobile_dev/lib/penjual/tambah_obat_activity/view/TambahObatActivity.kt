@@ -117,7 +117,7 @@ class TambahObatActivity : AppCompatActivity() {
 
         viewModel.addObatResult.observe(this) {
             it.onSuccess {response ->
-                response.data.let {
+                response.medicine.let {
                     val intent = Intent(this, HomePenjualActivity::class.java)
                     intent.putExtra("token", tokenInAdd)
                     intent.putExtra("namaToko",namToko)
@@ -129,7 +129,7 @@ class TambahObatActivity : AppCompatActivity() {
                     binding.btnTambahObat.isEnabled = false
                 }
             }.onFailure {e ->
-                Log.d(TAG,"onfailure : $e")
+                Log.d(TAG,"onfailure ketika add : $e")
                 Toast.makeText(this,"Gagal menambahkan obat anda", Toast.LENGTH_SHORT).show()
                 binding.btnTambahObat.isEnabled = true
             }
@@ -156,19 +156,25 @@ class TambahObatActivity : AppCompatActivity() {
         val hargaText = binding.etHargaObatAdd.text.toString()
         val harga = hargaText.toIntOrNull().toString().toRequestBody("text/plain".toMediaType())
 
+        val tipePenyakitText = binding.tvSelectedPenyakit.text.toString()
+        val tipePenyakit = tipePenyakitText.toRequestBody("text/plain".toMediaType())
+
+        val linkPText = binding.etLinkProduct.text.toString()
+        val linkP = linkPText.toRequestBody("text/plain".toMediaType())
+
         val img = binding.ivProduk
 
-        val photoFile2 = convertImageViewToFile(img, "gambar.jpeg")
+        val photoFile2 = convertImageViewToFile(img, "gambar.jpg")
         val compressedPhotoFile = photoFile2?.let { compressImageFile(it) }
-        val requestImageFile = compressedPhotoFile?.asRequestBody("image/jpeg".toMediaTypeOrNull())
+        val requestImageFile = compressedPhotoFile?.asRequestBody("image/jpg".toMediaTypeOrNull())
         val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-            "gambar",
+            "file",
             compressedPhotoFile?.name,
             requestImageFile!!
         )
 
-        Log.d("TambahObatActivity", "addStory called with: namaObat = $namaObat, description = $description, stok = $stok, harga = $harga, photoRequestBody = $imageMultipart")
-        viewModel.addObat(tokenInAdd!!,namaObat,description,stok,harga,imageMultipart)
+        Log.d("TambahObatActivity", "addStory called with: namaObat = $namaObat, description = $description, stok = $stok, harga = $harga,list penyakit = $tipePenyakit photoRequestBody = $imageMultipart, link URL: $linkP")
+        viewModel.addObat(tokenInAdd!!,namaObat,description,stok,harga,tipePenyakit,imageMultipart,linkP)
 
     }
 

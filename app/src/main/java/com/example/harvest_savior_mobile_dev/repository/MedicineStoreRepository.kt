@@ -32,20 +32,22 @@ class MedicineStoreRepository(private val apiService: ApiService, private val pr
     }
 
     suspend fun getObat(tokenP : String?) : GetObatResponse {
-        return apiService.getObat("RequestBodyrer $tokenP")
+        return apiService.getObat("Bearer $tokenP")
     }
 
     suspend fun addObat(
         tokenP: String,
         nama : RequestBody?,
         deskripsi : RequestBody?,
-        stok:RequestBody?,
         harga :RequestBody?,
-        photo : MultipartBody.Part?) : AddObatResponse {
+        stok:RequestBody?,
+        tipePenyakit : RequestBody?,
+        photo : MultipartBody.Part?,
+        link: RequestBody?) : AddObatResponse {
         Log.d("MedicineStoreRepository", "addObat called with: tokenP = $tokenP, nama = $nama, deskripsi = $deskripsi, stok = $stok, harga = $harga, photo = $photo")
 
         return withContext(Dispatchers.IO) {
-        apiService.addObat("Bearer $tokenP",nama,deskripsi,stok,harga,photo)
+        apiService.addObat("Bearer $tokenP",nama,deskripsi,harga,stok,tipePenyakit,photo,link)
         }
 
     }
@@ -54,8 +56,9 @@ class MedicineStoreRepository(private val apiService: ApiService, private val pr
         return apiService.deleteObat("Bearer $tokenP",idObat)
     }
 
-    suspend fun editObat(tokenP: String, idObat: String,desk:RequestBody?,nama:RequestBody?,stok:Int?,harga:Int?,photo:RequestBody?) : EditObatResponse {
-        return apiService.editObat("Bearer $tokenP",idObat,desk,nama,stok,harga,photo)
+    suspend fun editObat(tokenP: String, idObat: String,desk:RequestBody?,nama:RequestBody?,stok:RequestBody?,harga:RequestBody?,penyakit: RequestBody?,photo:MultipartBody.Part?,link:RequestBody?) : EditObatResponse {
+        return apiService.editObat("Bearer $tokenP",idObat,nama,desk,harga,stok,penyakit,photo,link)
     }
+
 
 }

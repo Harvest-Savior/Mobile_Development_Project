@@ -12,13 +12,18 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.harvest_savior_mobile_dev.R
+import com.example.harvest_savior_mobile_dev.data.response.ListPenyakitObat
 import com.example.harvest_savior_mobile_dev.data.retrofit.ApiConfig
 import com.example.harvest_savior_mobile_dev.databinding.ActivityEditObatBinding
 import com.example.harvest_savior_mobile_dev.lib.ViewModelFactory.penjual.LoginStoreVMFactory
@@ -56,11 +61,13 @@ class EditObatActivity : AppCompatActivity() {
     private var namToko : String? = null
     private var emailToko : String? = null
 
+    private var phooUri: String? = null
     private var idObat : String? = null
     private var namaObat : String? = null
     private var descObat : String? = null
-    private var hargaObat : Int? = null
+    private var hargaObat : String? = null
     private var stokObat : Int? = null
+    private var linkObat : String? = null
 
     private val requestPermissionLauncher =
         registerForActivityResult(
@@ -96,15 +103,34 @@ class EditObatActivity : AppCompatActivity() {
         namToko = intent.getStringExtra("namaToko")
         emailToko = intent.getStringExtra("email")
         idObat = intent.getStringExtra(TAG_ID_OBAT)
+        phooUri = intent.getStringExtra(TAG_PHOTO_URI)
         descObat = intent.getStringExtra(TAG_DESC)
         namaObat = intent.getStringExtra(TAG_NAMA_OBAT)
-        hargaObat = intent.getIntExtra(TAG_HARGA,0)
+        hargaObat = intent.getStringExtra(TAG_HARGA)
         stokObat = intent.getIntExtra(TAG_STOK,0)
+        linkObat = intent.getStringExtra(TAG_LINK)
 
         Log.d(TAG,"idObat : $idObat")
         Log.d(TAG,"token : $token2")
         Log.d(TAG,"stok : $stokObat")
         Log.d(TAG,"harga : $hargaObat")
+
+        val adapterSpinner = ArrayAdapter(this, android.R.layout.simple_spinner_item, ListPenyakitObat.penyakitList)
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerPenyakitEdit.adapter = adapterSpinner
+
+        binding.spinnerPenyakitEdit.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val selectedPenyakit = p0?.getItemAtPosition(p2).toString()
+                binding.tvSelectedPenyakitEdit.text = selectedPenyakit
+                binding.cardSelectedPenyakit.visibility = View.VISIBLE
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
 
 
 
@@ -140,38 +166,50 @@ class EditObatActivity : AppCompatActivity() {
         binding.etDeskripsiObat.setText(descObat)
         binding.etStok.setText(stokObat.toString())
         binding.etHargaObat.setText(hargaObat.toString())
+        binding.etLinkProduct.setText(linkObat.toString())
+        Glide.with(this).load(phooUri).into(binding.ivProduk)
 
     }
 
     private  fun addStory() {
-        val deskIn = binding.etDeskripsiObat.text.toString().toRequestBody("text/plain".toMediaType())
-        val namaIn = binding.etNamaObat.text.toString().toRequestBody("text/plain".toMediaType())
-        val stokIn = binding.etStok.text.toString().toIntOrNull()
-        val hargaIn = binding.etHargaObat.text.toString().toIntOrNull()
+        val namaObatText = binding.etNamaObat.text.toString()
+        val namaObat = namaObatText.toString().toRequestBody("text/plain".toMediaType())
+
+        val descriptionText = binding.etDeskripsiObat.text.toString()
+        val description = descriptionText.toString().toRequestBody("text/plain".toMediaType())
+
+        val stokText = binding.etStok.text.toString()
+        val stok = stokText.toIntOrNull().toString().toRequestBody("text/plain".toMediaType())
+
+        val hargaText = binding.etHargaObat.text.toString()
+        val harga = hargaText.toIntOrNull().toString().toRequestBody("text/plain".toMediaType())
+
+        val tipePenyakitText = binding.tvSelectedPenyakitEdit.text.toString()
+        val tipePenyakit = tipePenyakitText.toRequestBody("text/plain".toMediaType())
+
+        val linkPText = binding.etLinkProduct.text.toString()
+        val linkP = linkPText.toRequestBody("text/plain.".toMediaType())
 
         val img = binding.ivProduk
-        val photoFile2 = convertImageViewToFile(img, "photo.jpg")
-        val photoRequestBody = fileToRequestBody(photoFile2)
+
+        val photoFile2 = convertImageViewToFile(img, "gambar.jpg")
+        val compressedPhotoFile = photoFile2?.let { compressImageFile(it) }
+        val requestImageFile = compressedPhotoFile?.asRequestBody("image/jpg".toMediaTypeOrNull())
+        val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+            "file",
+            compressedPhotoFile?.name,
+            requestImageFile!!
+        )
 
         if (photoFile2 == null) {
 
-            viewModel.editObat(token2!!, idObat!!, deskIn, namaIn, stokIn, hargaIn, null)
+            viewModel.editObat(token2!!, idObat!!, description,namaObat,stok,harga, tipePenyakit,null,linkP )
         } else {
-            val compressedPhotoFile = compressImageFile(photoFile2)
-            val photoUri = Uri.fromFile(compressedPhotoFile)
-            viewModel.editObat(token2!!, idObat!!, deskIn, namaIn, stokIn, hargaIn, photoRequestBody)
+            Log.d("EditObatActivity", "editStory called with: namaObat = $namaObat, description = $description, stok = $stok, harga = $harga,list penyakit = $tipePenyakit photoRequestBody = $imageMultipart, link URL: $linkP")
+
+            viewModel.editObat(token2!!, idObat!!, description,namaObat,stok,harga, tipePenyakit,imageMultipart,linkP)
         }
     }
-
-    private fun fileToRequestBody(file: File?): RequestBody? {
-        return if (file != null) {
-            RequestBody.create("image/*".toMediaTypeOrNull(), file)
-        } else {
-            null
-        }
-    }
-
-
 
     private fun convertImageViewToFile(imageView: ImageView, fileName: String): File? {
         val drawable = imageView.drawable
@@ -221,6 +259,7 @@ class EditObatActivity : AppCompatActivity() {
         return compressedFile
     }
 
+
     private fun startGallery() {
         launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
@@ -261,10 +300,12 @@ class EditObatActivity : AppCompatActivity() {
         private const val TAG = "EditObatActivity"
 
         private const val TAG_ID_OBAT = "idObat"
+        private const val TAG_PHOTO_URI = "imgUri"
         private const val TAG_NAMA_OBAT = "namaObat"
         private const val TAG_PHOTO_OBAT = "photoObat"
         private const val TAG_DESC = "deskripsiObat"
         private const val TAG_STOK = "stokObat"
         private const val TAG_HARGA = "hargaObat"
+        private const val TAG_LINK = "linkObat"
     }
 }

@@ -31,11 +31,21 @@ class LoginJsonPenjualVM(private val medicineStoreRepository: MedicineStoreRepos
 
                 val response = medicineStoreRepository.loginJspn(requestBody)
                 _loginResult.postValue(Result.success(response))
+
+                response.data?.gambar?.let {
+                    saveGambarToPreference(it) // Simpan gambar ke preference
+                }
             } catch (e: Exception) {
                 _loginResult.postValue(Result.failure(e))
             } finally {
                 _loading.value = false
             }
+        }
+    }
+
+    fun saveGambarToPreference(gambar: String) {
+        viewModelScope.launch {
+            loginStorePreference.saveGambar(gambar)
         }
     }
 

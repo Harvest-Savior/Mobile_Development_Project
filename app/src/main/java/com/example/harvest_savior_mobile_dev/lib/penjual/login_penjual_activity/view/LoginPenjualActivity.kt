@@ -50,8 +50,6 @@ class LoginPenjualActivity : AppCompatActivity() {
         val loginViewModelFactory = LoginStoreVMFactory(medicineStoreRepository,pref)
         viewModel2 = ViewModelProvider(this, loginViewModelFactory).get(LoginJsonPenjualVM::class.java)
 
-
-
         binding.btnLoginPenjual.setOnClickListener {
             val inputEmail = binding.etEmailPenjual.text.toString()
             val inputPass = binding.etPwPenjual.text.toString()
@@ -79,12 +77,17 @@ class LoginPenjualActivity : AppCompatActivity() {
                         putExtra("token", data.accessToken)
                         putExtra("namaToko", data.namaToko)
                         putExtra("email", data.email)
+                        putExtra("gambar", data.gambar)
+
                     }
+                    Log.d("LoginPenjualA","nilai gambar : ${data.gambar}")
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     AnimationUtil.startActivityWithSlideAnimation(this, intent)
                     finish()
                     viewModel2.saveLoginSession(response)
+                    viewModel2.saveGambarToPreference(data.gambar ?: "")
                     Snackbar.make(window.decorView.rootView, "Berhasil Login", Snackbar.LENGTH_SHORT).show()
+
                 }
             }.onFailure {
                 Snackbar.make(window.decorView.rootView, "Gagal Login", Snackbar.LENGTH_SHORT).show()

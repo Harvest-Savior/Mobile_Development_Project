@@ -16,8 +16,17 @@ data class EditObatResponse(
 
 data class DataEditObat(
 
+	@field:SerializedName("penyakit")
+	val penyakit: String? = null,
+
+	@field:SerializedName("linkProduct")
+	val linkProduct: String? = null,
+
 	@field:SerializedName("harga")
-	val harga: Int? = null,
+	val harga: String? = null,
+
+	@field:SerializedName("gambarName")
+	val gambarName: String? = null,
 
 	@field:SerializedName("namaObat")
 	val namaObat: String? = null,
@@ -26,14 +35,8 @@ data class DataEditObat(
 	val deskripsi: String? = null,
 
 	@field:SerializedName("stok")
-	val stok: Int? = null,
+	val stok: String? = null,
 
-	@field:SerializedName("id")
-	val id: String? = null,
-
-	@field:SerializedName("gambar")
-	val gambar: String? = null,
-
-	@field:SerializedName("user")
-	val user: String? = null
+	@field:SerializedName("url")
+	val url: String? = null
 )

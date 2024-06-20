@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id("kotlin-android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -16,7 +17,9 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+
         buildConfigField("String","BASE_URI","\"http://34.50.79.94:8080/\"")
+        buildConfigField("String","BASE_URI_DETEKSI","\" https://ml-api-main-2yxfend4ya-et.a.run.app/\"")
         buildConfigField("String","BASE_URI_OLD","\"https://apiauthentication-2yxfend4ya-et.a.run.app/user/\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -74,5 +77,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
-   implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    implementation("com.github.bumptech.glide:okhttp3-integration:4.12.0")
+
+
 }

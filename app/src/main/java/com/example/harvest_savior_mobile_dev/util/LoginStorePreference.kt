@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.map
 val Context.datastoreStore : DataStore<Preferences> by preferencesDataStore(name = "loginStore")
 class LoginStorePreference(private val dataStore: DataStore<Preferences>) {
     val LOGIN_RESPONSE_KEY = stringPreferencesKey("login_store_response")
+    private val GAMBAR_KEY = stringPreferencesKey("gambar")
     suspend fun saveLoginSession(loginResponse: LoginStoreResponse) {
         val jsonString = Gson().toJson(loginResponse)
         dataStore.edit { preferences ->
@@ -31,6 +32,18 @@ class LoginStorePreference(private val dataStore: DataStore<Preferences>) {
             } else {
                 null
             }
+        }
+    }
+
+    suspend fun saveGambar(gambar: String) {
+        dataStore.edit { preferences ->
+            preferences[GAMBAR_KEY] = gambar
+        }
+    }
+
+    fun getGambar(): Flow<String?> {
+        return dataStore.data.map { preferences ->
+            preferences[GAMBAR_KEY]
         }
     }
 

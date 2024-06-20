@@ -69,6 +69,9 @@
             android:layout_marginTop="10dp"
             />
 
+
+
+
         <TextView
             android:id="@+id/tv_namaObat"
             android:layout_width="wrap_content"
@@ -148,6 +151,55 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/tv_penyakit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/obat_untuk_penyakit"
+            android:textSize="18sp"
+            android:textColor="@color/gray700"
+            android:fontFamily="@font/abelregular"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/tl_deskripsiObat"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <Spinner
+            android:id="@+id/spinner_penyakitEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_penyakit_title"
+            tools:ignore="TouchTargetSizeCheck" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_selected_penyakit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="15dp"
+            android:backgroundTint="@color/green1"
+            app:layout_constraintTop_toBottomOf="@id/spinner_penyakitEdit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/tv_selected_penyakitEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/penyakit_yang_dipilih_akan_muncul_di_sini"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/abelregular"
+                android:padding="16dp"
+                android:textColor="@color/white"
+                />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
             android:id="@+id/tv_stok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -156,7 +208,7 @@
             android:textColor="@color/gray700"
             android:fontFamily="@font/abelregular"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/tl_deskripsiObat"
+            app:layout_constraintTop_toBottomOf="@id/card_selected_penyakit"
             app:layout_constraintStart_toStartOf="parent"
             />
 
@@ -223,11 +275,49 @@
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/tv_linkProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Link E-Commerce Produk"
+            android:textSize="18sp"
+            android:textColor="@color/gray700"
+            android:fontFamily="@font/abelregular"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/tl_hargaObat"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tl_linkProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_linkProduct"
+            app:layout_constraintStart_toStartOf="parent"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:placeholderText="E-Commerce"
+            app:boxStrokeColor="@color/gray400"
+            app:placeholderTextAppearance="@style/PlaceholderStyle"
+            app:layout_constraintEnd_toEndOf="parent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_linkProduct"
+                android:layout_width="match_parent"
+                android:inputType="textUri"
+                android:hint="@string/link_e_commerce_jika_ada"
+                android:textColor="@color/gray500"
+                android:fontFamily="@font/interregular"
+                android:textSize="18sp"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
         <Button
             android:id="@+id/btn_simpan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tl_hargaObat"
+            app:layout_constraintTop_toBottomOf="@id/tl_linkProduct"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/simpan"

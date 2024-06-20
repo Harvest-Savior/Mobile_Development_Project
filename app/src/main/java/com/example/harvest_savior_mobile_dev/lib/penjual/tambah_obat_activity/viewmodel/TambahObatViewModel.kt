@@ -20,11 +20,11 @@ class TambahObatViewModel(private val medicineStoreRepository: MedicineStoreRepo
     private val _loading = MutableLiveData<Boolean>()
     val loading : LiveData<Boolean> = _loading
 
-    fun addObat(tokenP:String, nama : RequestBody?, desk : RequestBody?, stok:RequestBody?, harga:RequestBody?, photo:MultipartBody.Part?) {
+    fun addObat(tokenP:String, nama : RequestBody?, desk : RequestBody?, stok:RequestBody?, harga:RequestBody?,tipePenyakit : RequestBody?, photo:MultipartBody.Part?,link:RequestBody?) {
         _loading.value = true
         viewModelScope.launch {
             try {
-                val response = medicineStoreRepository.addObat(tokenP,nama,desk,stok,harga,photo)
+                val response = medicineStoreRepository.addObat(tokenP,nama,desk,harga,stok,tipePenyakit,photo,link)
                 _addObatResult.postValue(Result.success(response))
 
             }catch (e : Exception) {

@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class AddObatResponse(
 
-	@field:SerializedName("data")
-	val data: DataAddObat? = null,
+	@field:SerializedName("medicine")
+	val medicine: Medicine? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
@@ -14,26 +14,41 @@ data class AddObatResponse(
 	val status: String? = null
 )
 
-data class DataAddObat(
+data class Medicine(
+
+	@field:SerializedName("penyakit")
+	val penyakit: String? = null,
+
+	@field:SerializedName("storeuserId")
+	val storeuserId: Int? = null,
+
+	@field:SerializedName("createdAt")
+	val createdAt: String? = null,
+
+	@field:SerializedName("linkProduct")
+	val linkProduct: String? = null,
 
 	@field:SerializedName("harga")
-	val harga: Int? = null,
+	val harga: String? = null,
 
 	@field:SerializedName("namaObat")
 	val namaObat: String? = null,
+
+	@field:SerializedName("id")
+	val id: Int? = null,
 
 	@field:SerializedName("deskripsi")
 	val deskripsi: String? = null,
 
 	@field:SerializedName("stok")
-	val stok: Int? = null,
-
-	@field:SerializedName("id")
-	val id: String? = null,
+	val stok: String? = null,
 
 	@field:SerializedName("gambar")
 	val gambar: String? = null,
 
-	@field:SerializedName("user")
-	val user: String? = null
+	@field:SerializedName("url")
+	val url: String? = null,
+
+	@field:SerializedName("updatedAt")
+	val updatedAt: String? = null
 )

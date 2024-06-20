@@ -8,27 +8,23 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.harvest_savior_mobile_dev.R
-import com.example.harvest_savior_mobile_dev.data.response.DataItemGetObat
-import com.example.harvest_savior_mobile_dev.data.response.Obat
+import com.example.harvest_savior_mobile_dev.data.response.MedicinesItem
 import com.example.harvest_savior_mobile_dev.data.retrofit.ApiConfig
 import com.example.harvest_savior_mobile_dev.databinding.ActivityHomePenjualBinding
 import com.example.harvest_savior_mobile_dev.lib.ViewModelFactory.penjual.LoginStoreVMFactory
 import com.example.harvest_savior_mobile_dev.lib.penjual.home_penjual_activity.viewmodel.HomePenjualViewModel
 import com.example.harvest_savior_mobile_dev.lib.penjual.setting_activity.activity.SettingPenjualActivity
-import com.example.harvest_savior_mobile_dev.lib.penjual.setting_activity.viewModel.SettingPenjualViewModel
 import com.example.harvest_savior_mobile_dev.lib.penjual.tambah_obat_activity.view.TambahObatActivity
 import com.example.harvest_savior_mobile_dev.repository.MedicineStoreRepository
 import com.example.harvest_savior_mobile_dev.util.AnimationUtil
 import com.example.harvest_savior_mobile_dev.util.LoginStorePreference
 import com.example.harvest_savior_mobile_dev.util.adapter.ProdukObatPenjualAdapter
-import com.example.harvest_savior_mobile_dev.util.adapter.RekomendasiObatAdapter
 import com.example.harvest_savior_mobile_dev.util.datastoreStore
-import kotlinx.coroutines.launch
+
 
 class HomePenjualActivity : AppCompatActivity() {
 
@@ -45,6 +41,7 @@ class HomePenjualActivity : AppCompatActivity() {
     private var token2 : String? = null
     private var namToko : String? = null
     private var emailToko : String? = null
+    private var imgProfil : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityHomePenjualBinding.inflate(layoutInflater)
@@ -60,18 +57,42 @@ class HomePenjualActivity : AppCompatActivity() {
 
         val homeViewModelFactory = LoginStoreVMFactory(medicineStoreRepository,pref)
         viewModel = ViewModelProvider(this,homeViewModelFactory).get(HomePenjualViewModel::class.java)
+
         token2 = intent.getStringExtra("token")
         namToko = intent.getStringExtra("namaToko")
         emailToko = intent.getStringExtra("email")
+        imgProfil = intent.getStringExtra("gambar")
+        Log.d(TAG,"gambar profil di home :$imgProfil")
 
         viewModel.getObatResult.observe(this) {
             it.onSuccess {
-                it.data?.let {data ->
+                it.medicines?.let {data ->
                     if(data != null ){
                     setListData(data)
+
                     }
                 }
             }
+        }
+
+        if (!imgProfil.isNullOrEmpty()) {
+            loadProfileImage(imgProfil!!)
+        } else {
+            // Jika gambar dari intent null, coba ambil dari preference
+            viewModel.getGambar().observe(this) { gambarDariPreference ->
+                gambarDariPreference?.let {
+                    loadProfileImage(it)
+                }
+            }
+        }
+
+        if (!imgProfil.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(imgProfil)
+                .circleCrop()
+                .placeholder(R.drawable.profile_2)
+                .error(R.drawable.image_3_gray400)
+                .into(binding.ivProfilePetani)
         }
 
         viewModel.getObat(token2)
@@ -98,12 +119,29 @@ class HomePenjualActivity : AppCompatActivity() {
         }
 
         binding.ivProfilePetani.setOnClickListener {
-            val intent = Intent(this, SettingPenjualActivity::class.java)
+            val intent = Intent(this, SettingPenjualActivity::class.java).apply {
+                putExtra("img",imgProfil)
+                putExtra("namaToko",namToko)
+                putExtra("email",emailToko)
+            }
+
             AnimationUtil.startActivityWithSlideAnimation(this, intent)
         }
+        val imgProfil2 = "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+
+
     }
 
-    private fun setListData(data: List<DataItemGetObat?>) {
+    private fun loadProfileImage(url: String) {
+        Glide.with(this)
+            .load(url)
+            .circleCrop()
+            .placeholder(R.drawable.profile_2)
+            .error(R.drawable.image_3_gray400)
+            .into(binding.ivProfilePetani)
+    }
+
+    private fun setListData(data: List<MedicinesItem?>) {
         produkObatAdapter = ProdukObatPenjualAdapter(data.toMutableList(), this, token2, namToko, emailToko, viewModel)
         binding.rvProdukObat.adapter = produkObatAdapter
 

@@ -18,11 +18,11 @@ class EditObatViewModel(private val medicineStoreRepository: MedicineStoreReposi
     private val _loading = MutableLiveData<Boolean>()
     val loading : LiveData<Boolean> = _loading
 
-    fun editObat(tokenP : String, idObat : String,desk:RequestBody?,nama:RequestBody?,stok:Int?,harga:Int?,photo: RequestBody?) {
+    fun editObat(tokenP: String, idObat: String,desk:RequestBody?,nama:RequestBody?,stok:RequestBody?,harga:RequestBody?,penyakit: RequestBody?,photo:MultipartBody.Part?,link:RequestBody?) {
         _loading.value = true
         viewModelScope.launch {
             try {
-                val response = medicineStoreRepository.editObat(tokenP,idObat,desk,nama,stok,harga,photo)
+                val response = medicineStoreRepository.editObat(tokenP,idObat,nama,desk,harga,stok,penyakit,photo,link)
                 _editObatResult.postValue(Result.success(response))
 
             } catch (e : Exception) {
