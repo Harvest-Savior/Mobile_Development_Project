@@ -7,18 +7,18 @@ import com.example.harvest_savior_mobile_dev.lib.petani.dashboard_petani_activit
 import com.example.harvest_savior_mobile_dev.lib.petani.dashboard_petani_activity.view.fragment.HomeFragment
 import com.example.harvest_savior_mobile_dev.lib.petani.dashboard_petani_activity.view.fragment.RiwayatFragment
 
-class DashboardAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
+class DashboardAdapter(activity: FragmentActivity,private val tokenDeteksi: String?) : FragmentStateAdapter(activity) {
 
-    private val fragments = listOf(
-        HomeFragment(),
-        DeteksiFragment(),
-        RiwayatFragment()
-    )
     override fun getItemCount(): Int {
-        return fragments.size
+        return 3
     }
 
     override fun createFragment(position: Int): Fragment {
-        return fragments[position]
+        return when (position) {
+            0 -> HomeFragment()
+            1 -> DeteksiFragment()
+            2 -> RiwayatFragment.newInstance(tokenDeteksi ?: "")
+            else -> Fragment()
+        }
     }
 }

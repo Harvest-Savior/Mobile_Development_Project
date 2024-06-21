@@ -33,8 +33,9 @@ class SettingPenjualActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val apiService = ApiConfig.getApiService()
+        val apiService2 = ApiConfig.getApiServiceDeteksi()
         val pref = LoginStorePreference(application.datastoreStore)
-        medicineStoreRepository = MedicineStoreRepository(apiService,pref)
+        medicineStoreRepository = MedicineStoreRepository(apiService,apiService2,pref)
 
         namToko = intent.getStringExtra("namaToko")
         emailToko = intent.getStringExtra("email")
@@ -87,5 +88,6 @@ class SettingPenjualActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "SettingPenjualActivity"
+
     }
 }

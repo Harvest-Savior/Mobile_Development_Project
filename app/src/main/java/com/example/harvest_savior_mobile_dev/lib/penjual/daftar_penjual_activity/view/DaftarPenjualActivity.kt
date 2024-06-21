@@ -20,8 +20,10 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.example.harvest_savior_mobile_dev.BuildConfig
 import com.example.harvest_savior_mobile_dev.R
 import com.example.harvest_savior_mobile_dev.data.retrofit.ApiConfig
+import com.example.harvest_savior_mobile_dev.data.retrofit.ApiService
 import com.example.harvest_savior_mobile_dev.databinding.ActivityDaftarPenjualBinding
 import com.example.harvest_savior_mobile_dev.lib.ViewModelFactory.penjual.StoreViewModelFactory
 import com.example.harvest_savior_mobile_dev.lib.ViewModelFactory.petani.RegisterViewModelFactory
@@ -75,6 +77,7 @@ class DaftarPenjualActivity : AppCompatActivity() {
             this,
             REQUIRED_PERMISSION
         ) == PackageManager.PERMISSION_GRANTED
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityDaftarPenjualBinding.inflate(layoutInflater)
@@ -84,9 +87,11 @@ class DaftarPenjualActivity : AppCompatActivity() {
             requestPermissionLauncher.launch(REQUIRED_PERMISSION)
         }
 
+
         pref = LoginStorePreference.getInstance(application.datastoreStore)
         val apiService = ApiConfig.getApiService()
-        medicineStoreRepository = MedicineStoreRepository(apiService,pref)
+        val apiService2 = ApiConfig.getApiServiceDeteksi()
+        medicineStoreRepository = MedicineStoreRepository(apiService,apiService2,pref)
 
 
         val daftarViewModelFactory = StoreViewModelFactory(medicineStoreRepository)
@@ -296,5 +301,7 @@ class DaftarPenjualActivity : AppCompatActivity() {
     companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
         private const val TAG = "DaftarPenjualActivity"
+
+
     }
 }

@@ -88,8 +88,9 @@ class TambahObatActivity : AppCompatActivity() {
         }
 
         val apiService = ApiConfig.getApiService()
+        val apiService2 = ApiConfig.getApiServiceDeteksi()
         pref = LoginStorePreference.getInstance(application.datastoreStore)
-        medicineStoreRepository = MedicineStoreRepository(apiService,pref)
+        medicineStoreRepository = MedicineStoreRepository(apiService,apiService2,pref)
 
         val tambahViewModelFactory = LoginStoreVMFactory(medicineStoreRepository,pref)
         viewModel = ViewModelProvider(this, tambahViewModelFactory).get(TambahObatViewModel::class.java)
@@ -264,5 +265,6 @@ class TambahObatActivity : AppCompatActivity() {
     companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
         private const val TAG = "TambahObatActivity"
+
     }
 }

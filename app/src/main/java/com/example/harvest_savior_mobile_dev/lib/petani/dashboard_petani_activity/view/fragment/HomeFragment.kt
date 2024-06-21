@@ -74,8 +74,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val apiService = ApiConfig.getApiService()
+        val apiService2 = ApiConfig.getApiServiceDeteksi()
         pref = LoginPreference.getInstance(requireActivity().datastore)
-        repo = UserFarmerRepository(apiService)
+        repo = UserFarmerRepository(apiService,apiService2)
         val dashboardVMFactory = LoginViewModelFactory(repo,pref)
         viewModel = ViewModelProvider(this, dashboardVMFactory).get(DashboardPetaniViewModel::class.java)
         token2 = requireActivity().intent.getStringExtra("token")
@@ -120,5 +121,6 @@ class HomeFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+        private const val TOKEN_DETEKSI = "tokenDeteksi"
     }
 }

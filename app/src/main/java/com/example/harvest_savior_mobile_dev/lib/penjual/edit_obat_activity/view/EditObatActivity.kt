@@ -94,8 +94,9 @@ class EditObatActivity : AppCompatActivity() {
         }
 
         val apiService = ApiConfig.getApiService()
+        val apiService2 = ApiConfig.getApiServiceDeteksi()
         pref = LoginStorePreference.getInstance(application.datastoreStore)
-        medicineStoreRepository = MedicineStoreRepository(apiService,pref)
+        medicineStoreRepository = MedicineStoreRepository(apiService,apiService2,pref)
 
         val editViewModelFactory = LoginStoreVMFactory(medicineStoreRepository,pref)
         viewModel = ViewModelProvider(this, editViewModelFactory).get(EditObatViewModel::class.java)
@@ -307,5 +308,6 @@ class EditObatActivity : AppCompatActivity() {
         private const val TAG_STOK = "stokObat"
         private const val TAG_HARGA = "hargaObat"
         private const val TAG_LINK = "linkObat"
+
     }
 }

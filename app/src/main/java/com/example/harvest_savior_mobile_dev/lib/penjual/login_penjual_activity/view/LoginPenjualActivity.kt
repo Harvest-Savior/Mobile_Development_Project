@@ -44,8 +44,9 @@ class LoginPenjualActivity : AppCompatActivity() {
         clickAbleText.setClickableText(fullText,2,LoginPetaniActivity::class.java)
 
         val apiService = ApiConfig.getApiService()
+        val apiService2 = ApiConfig.getApiServiceDeteksi()
         pref = LoginStorePreference.getInstance(application.datastoreStore)
-        medicineStoreRepository = MedicineStoreRepository(apiService,pref)
+        medicineStoreRepository = MedicineStoreRepository(apiService,apiService2,pref)
 
         val loginViewModelFactory = LoginStoreVMFactory(medicineStoreRepository,pref)
         viewModel2 = ViewModelProvider(this, loginViewModelFactory).get(LoginJsonPenjualVM::class.java)
@@ -125,5 +126,9 @@ class LoginPenjualActivity : AppCompatActivity() {
         } else {
             binding.progressLoginPenjual.visibility = View.GONE
         }
+    }
+
+    companion object {
+
     }
 }

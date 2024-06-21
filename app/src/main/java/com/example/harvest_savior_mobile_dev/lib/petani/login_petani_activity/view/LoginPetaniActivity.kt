@@ -33,13 +33,17 @@ class LoginPetaniActivity : AppCompatActivity() {
 
     private lateinit var userFarmerRepository: UserFarmerRepository
     private lateinit var pref : LoginPreference
+
+    private var tokenDeteksi :String ? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityLoginPetaniBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val apiService = ApiConfig.getApiService()
-        userFarmerRepository = UserFarmerRepository(apiService)
+        val apiService2 = ApiConfig.getApiServiceDeteksi()
+
+        userFarmerRepository = UserFarmerRepository(apiService,apiService2)
         pref =LoginPreference.getInstance(application.datastore)
 
         val loginViewModelFactory = LoginViewModelFactory(userFarmerRepository,pref)
@@ -52,14 +56,17 @@ class LoginPetaniActivity : AppCompatActivity() {
         viewModel2.loginResult.observe(this) {
             it.onSuccess { response ->
                 response.data?.let { data ->
-                    val intent = Intent(this, DashboardPetaniActivity::class.java).apply {
-                        putExtra("token", data.accessToken)
-                        putExtra("namaToko", data.namaLengkap)
-                        putExtra("email", data.email)
+                    viewModel2.getTokenDeteksi().observe(this) { tokenDeteksi ->
+                        val intent = Intent(this, DashboardPetaniActivity::class.java).apply {
+                            putExtra("token", data.accessToken)
+                            putExtra("namaToko", data.namaLengkap)
+                            putExtra("email", data.email)
+                            putExtra(TOKEN_DETEKSI, tokenDeteksi)
+                        }
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        AnimationUtil.startActivityWithSlideAnimation(this, intent)
+                        finish()
                     }
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    AnimationUtil.startActivityWithSlideAnimation(this, intent)
-                    finish()
                     viewModel2.saveLoginSession(response)
                     Snackbar.make(window.decorView.rootView, "Berhasil Login", Snackbar.LENGTH_SHORT).show()
                 }
@@ -67,6 +74,14 @@ class LoginPetaniActivity : AppCompatActivity() {
                 Snackbar.make(window.decorView.rootView, "Gagal Login", Snackbar.LENGTH_SHORT).show()
             }
         }
+
+        viewModel2.getTokenResult.observe(this) {
+            it.onSuccess { response ->
+                viewModel2.saveTokenDeteksi(response.accessToken!!)
+            }
+        }
+
+
 
         viewModel2.getLoginSession().observe(this) { isLoged : LoginFarmerResponse? ->
             if (isLoged != null){
@@ -91,7 +106,7 @@ class LoginPetaniActivity : AppCompatActivity() {
 
             if (inputEmail.isNotEmpty() && inputPass.isNotEmpty()) {
                 if (isValidEmail(inputEmail)) {
-                    viewModel2.login(inputEmail,inputPass)
+                    viewModel2.loginAndFetchToken(inputEmail,inputPass)
                 } else {
                     binding.etEmail.error = "Input email tidak valid"
                 }
@@ -116,5 +131,9 @@ class LoginPetaniActivity : AppCompatActivity() {
         } else {
             binding.progressLoginPetani.visibility = View.GONE
         }
+    }
+
+    companion object {
+        private const val TOKEN_DETEKSI = "tokenDeteksi"
     }
 }

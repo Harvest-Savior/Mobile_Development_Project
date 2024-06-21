@@ -53,7 +53,8 @@ class HomePenjualActivity : AppCompatActivity() {
 
         pref = LoginStorePreference.getInstance(application.datastoreStore)
         val apiService = ApiConfig.getApiService()
-        medicineStoreRepository = MedicineStoreRepository(apiService,pref)
+        val apiService2 = ApiConfig.getApiServiceDeteksi()
+        medicineStoreRepository = MedicineStoreRepository(apiService,apiService2,pref)
 
         val homeViewModelFactory = LoginStoreVMFactory(medicineStoreRepository,pref)
         viewModel = ViewModelProvider(this,homeViewModelFactory).get(HomePenjualViewModel::class.java)
@@ -159,5 +160,6 @@ class HomePenjualActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "HomePenjualActivity"
+
     }
 }

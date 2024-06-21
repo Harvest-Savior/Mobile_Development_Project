@@ -38,5 +38,33 @@ class ApiConfig {
             return retrofit.create(ApiService::class.java)
 
         }
+
+        fun getApiServiceDeteksi(token: String? = null): ApiServiceDeteksi {
+            val baseUrl = BuildConfig.BASE_URI_DETEKSI
+
+            val loggingInterceptor =
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            val clientB = OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+            if (token != null) {
+                val authInterceptor = Interceptor { chain ->
+                    val req = chain.request()
+                    val requestHeader = req.newBuilder()
+                        .addHeader("Authorization", "Bearer $token")
+                        .build()
+                    chain.proceed(requestHeader)
+                }
+                clientB.addInterceptor(authInterceptor)
+            }
+
+            val client = clientB.build()
+            val retrofit = Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+            return retrofit.create(ApiServiceDeteksi::class.java)
+        }
     }
+
 }

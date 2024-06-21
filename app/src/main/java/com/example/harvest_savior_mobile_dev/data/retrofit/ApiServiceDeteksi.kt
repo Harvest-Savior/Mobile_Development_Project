@@ -24,14 +24,13 @@ interface ApiServiceDeteksi {
     @FormUrlEncoded
     @POST("token")
     suspend fun getTokenPrediksi(
-        @Field("username") username:String,
-        @Field("password") password : String
+        @Field("username") username:String?,
+        @Field("password") password : String?
     ) : DeteksiGetTokenResponse
 
     @GET("user_predictions")
     suspend fun getHistoryDekteksi(
         @Header("Authorization") token:String?,
-
     ) : GetRiwayatDeteksiResponse
 
 }

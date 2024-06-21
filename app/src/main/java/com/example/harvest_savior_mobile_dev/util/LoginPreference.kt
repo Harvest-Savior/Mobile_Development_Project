@@ -16,6 +16,7 @@ val Context.datastore : DataStore<Preferences> by preferencesDataStore(name = "l
 
 open class LoginPreference(private val dataStore: DataStore<Preferences>) {
     val LOGIN_RESPONSE_KEY = stringPreferencesKey("login_response")
+    private val TOKEN_DETEKSI_KEY = stringPreferencesKey("token_deteksi_key")
 
     suspend fun saveLoginSession(token: LoginFarmerResponse) {
         val jsonString = Gson().toJson(token)
@@ -35,6 +36,18 @@ open class LoginPreference(private val dataStore: DataStore<Preferences>) {
     suspend fun removeLoginSession() {
         dataStore.edit { preference ->
             preference.remove(LOGIN_RESPONSE_KEY)
+        }
+    }
+
+    suspend fun saveTokenDeteksi(tokenDeteksi: String) {
+        dataStore.edit { preference ->
+            preference[TOKEN_DETEKSI_KEY] = tokenDeteksi
+        }
+    }
+
+    fun getTokenDeteksi(): Flow<String?> {
+        return dataStore.data.map { preference ->
+            preference[TOKEN_DETEKSI_KEY]
         }
     }
 

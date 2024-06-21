@@ -29,7 +29,8 @@ class SettingPetaniActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val apiService = ApiConfig.getApiService()
-        userFarmerRepository = UserFarmerRepository(apiService)
+        val apiService2 = ApiConfig.getApiServiceDeteksi()
+        userFarmerRepository = UserFarmerRepository(apiService,apiService2)
 
         val pref =LoginPreference.getInstance(application.datastore)
         viewModel =ViewModelProvider(this, LoginViewModelFactory(userFarmerRepository,pref)).get(
@@ -58,5 +59,6 @@ class SettingPetaniActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "SettingPetaniActivity"
+
     }
 }

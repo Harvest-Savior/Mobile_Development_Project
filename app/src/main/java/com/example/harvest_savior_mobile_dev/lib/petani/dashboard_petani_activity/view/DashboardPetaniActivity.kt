@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -25,6 +26,7 @@ import com.example.harvest_savior_mobile_dev.lib.petani.dashboard_petani_activit
 import com.example.harvest_savior_mobile_dev.lib.petani.dashboard_petani_activity.view.fragment.HomeFragment
 import com.example.harvest_savior_mobile_dev.lib.petani.dashboard_petani_activity.view.fragment.RiwayatFragment
 import com.example.harvest_savior_mobile_dev.lib.petani.dashboard_petani_activity.viewmodel.DashboardPetaniViewModel
+import com.example.harvest_savior_mobile_dev.lib.petani.login_petani_activity.viewmodel.LoginJsonPetaniVM
 import com.example.harvest_savior_mobile_dev.repository.MedicineStoreRepository
 import com.example.harvest_savior_mobile_dev.repository.UserFarmerRepository
 import com.example.harvest_savior_mobile_dev.util.LoginPreference
@@ -36,6 +38,7 @@ class DashboardPetaniActivity : AppCompatActivity() {
     private var _binding: ActivityDashboardPetaniBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: DashboardPetaniViewModel
+    private lateinit var viewModel2: LoginJsonPetaniVM
     private lateinit var repo: UserFarmerRepository
     private lateinit var pref : LoginPreference
     private val requestPermissionLauncher =
@@ -58,6 +61,7 @@ class DashboardPetaniActivity : AppCompatActivity() {
     private var token2 : String? = null
     private var namaUser : String? = null
     private var emailToko : String? = null
+    private var tokenDeteksi :String? = null
 
     private var url : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,8 +73,9 @@ class DashboardPetaniActivity : AppCompatActivity() {
         }
 
         val apiService = ApiConfig.getApiService()
+        val apiService2 = ApiConfig.getApiServiceDeteksi()
         pref = LoginPreference.getInstance(application.datastore)
-        repo = UserFarmerRepository(apiService)
+        repo = UserFarmerRepository(apiService,apiService2)
         val dashboardVMFactory = LoginViewModelFactory(repo,pref)
         viewModel = ViewModelProvider(this, dashboardVMFactory).get(DashboardPetaniViewModel::class.java)
 
@@ -83,7 +88,9 @@ class DashboardPetaniActivity : AppCompatActivity() {
             }
         }
 
-        viewPager.adapter = DashboardAdapter(this)
+
+
+        viewPager.adapter = DashboardAdapter(this, tokenDeteksi)
         bottomNav.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
@@ -114,12 +121,19 @@ class DashboardPetaniActivity : AppCompatActivity() {
         token2 = intent.getStringExtra("token")
         namaUser = intent.getStringExtra("namaToko")
         emailToko = intent.getStringExtra("email")
+        viewModel.getTokenDeteksi().observe(this) { tokenD ->
+
+            tokenDeteksi = tokenD
+            Log.d(TAG, "Token Deteksi: $tokenDeteksi")
+        }
     }
 
     companion object {
         private const val TAG = "MainActivity"
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
         const val EXTRA_CAMERAX_IMAGE = "CameraX Image"
+        private const val TOKEN_DETEKSI = "tokenDeteksi"
+
     }
 }
 

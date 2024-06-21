@@ -26,12 +26,14 @@ import retrofit2.http.Path
 
 interface ApiService {
 
-    @FormUrlEncoded
+    @Multipart
     @POST("register/farmer")
     suspend fun postRegisterFarmer(
-        @Field("namaLengkap") namaLengkap : String,
-        @Field("email") email : String,
-        @Field("password") password : String
+        @Part("namaLengkap") namaLengkap : RequestBody?,
+        @Part("email") email : RequestBody?,
+        @Part("password") password : RequestBody?,
+        @Part("confPassword") confPassword : RequestBody?,
+        @Part photo: MultipartBody.Part?
     ) : RegisterFarmerResponse
 
     @FormUrlEncoded

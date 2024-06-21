@@ -14,10 +14,10 @@ data class PredictionsItem(
 	val result: String? = null,
 
 	@field:SerializedName("image")
-	val image: Any? = null,
+	val image: String? = null,
 
 	@field:SerializedName("medicines")
-	val medicines: Any? = null,
+	val medicines: String? = null,
 
 	@field:SerializedName("user_id")
 	val userId: String? = null,
