@@ -50,3 +50,6 @@ To use the application please download the .apk file at the following [link]([ht
 
 ## Architecture
 This app uses [MVVM (Model View View-Model)](https://developer.android.com/topic/architecture#recommended-app-arch) architecture.
+
+## Developer
+[Wijang Afdholanabil Kusuma](https://github.com/Afdholanabil/)  
