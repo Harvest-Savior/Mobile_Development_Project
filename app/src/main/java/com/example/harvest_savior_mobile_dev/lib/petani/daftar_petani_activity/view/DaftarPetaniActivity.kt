@@ -108,11 +108,10 @@ class DaftarPetaniActivity : AppCompatActivity() {
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()
-            }.onFailure {
+            }.onFailure {e ->
                 Toast.makeText(this, "Gagal", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
     private fun regiterFarmer() {
