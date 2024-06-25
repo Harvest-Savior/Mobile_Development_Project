@@ -3,7 +3,7 @@
 Product Based Capstone Bangkit 2024 | Harvest Savior
 
 ## File APK
-To use the application please download the .apk file at the following [link]([https://drive.google.com/file/d/1Av6eTcwZHNfAYnup_y65GKynjG8cy6U2/view?usp=sharing](https://drive.google.com/file/d/1-oN02xIU5JGLROQIBUlj_Bs4DjIAzCuR/view?usp=sharing))
+To use the application please download the .apk file at the following [link](https://drive.google.com/file/d/1Av6eTcwZHNfAYnup_y65GKynjG8cy6U2/view?usp=sharing](https://drive.google.com/file/d/1-oN02xIU5JGLROQIBUlj_Bs4DjIAzCuR/view?usp=sharing ) 
 
 ## Screenshots
 ### Medicine Store Application Interface
